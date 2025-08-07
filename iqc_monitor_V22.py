@@ -6166,11 +6166,12 @@ def create_sidebar():
                 with st.spinner("準備匯出資料中..."):
                     export_processed_data()
         
-        # 修復系統設定折疊選項的CSS樣式
+        # 修復系統設定折疊選項的CSS樣式 - 使用通用選擇器
         st.markdown("""
         <style>
-        /* 修復系統設定區域的樣式 */
-        .streamlit-expanderHeader {
+        /* 使用更通用的CSS選擇器修復系統設定區域 */
+        /* 折疊區塊標題樣式 */
+        div[data-testid="stExpanderToggleIcon"] + div {
             background-color: white !important;
             padding: 10px !important;
             border-radius: 6px !important;
@@ -6181,57 +6182,89 @@ def create_sidebar():
             line-height: 1.4 !important;
         }
         
-        .streamlit-expanderContent {
+        /* 折疊區塊內容樣式 - 使用通用屬性選擇器 */
+        details[open] summary ~ div {
             background-color: white !important;
-            padding: 15px !important;
+            padding: 20px !important;
             border-radius: 6px !important;
             margin-top: 5px !important;
         }
         
-        /* 確保系統設定內的元素正常顯示 */
-        .streamlit-expanderContent .stSelectbox label {
-            color: #333 !important;
-            font-size: 14px !important;
-            margin-bottom: 5px !important;
+        /* 使用更通用的選擇器修復下拉選單 */
+        details div[data-testid="stSelectbox"] {
+            margin-bottom: 20px !important;
+            clear: both !important;
         }
         
-        .streamlit-expanderContent .stCheckbox label {
+        details div[data-testid="stSelectbox"] label {
             color: #333 !important;
-            font-size: 14px !important;
+            font-size: 16px !important;
+            margin-bottom: 8px !important;
+            font-weight: 600 !important;
+            display: block !important;
         }
         
-        .streamlit-expanderContent .stButton button {
+        /* 使用通用選擇器修復複選框 */
+        details div[data-testid="stCheckbox"] {
+            margin-bottom: 20px !important;
+            clear: both !important;
+        }
+        
+        details div[data-testid="stCheckbox"] label {
+            color: #333 !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            line-height: 1.5 !important;
+        }
+        
+        /* 使用通用選擇器修復按鈕 */
+        details div[data-testid="stButton"] {
+            margin: 15px 0 !important;
+            clear: both !important;
+        }
+        
+        details div[data-testid="stButton"] button {
             background-color: #90A4AE !important;
             color: white !important;
             border: none !important;
             border-radius: 6px !important;
-            padding: 8px 16px !important;
+            padding: 10px 20px !important;
             font-size: 14px !important;
-            margin-top: 10px !important;
+            font-weight: 500 !important;
+            width: 100% !important;
         }
         
-        .streamlit-expanderContent .stButton button:hover {
+        details div[data-testid="stButton"] button:hover {
             background-color: #78909C !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
         }
         
-        /* 修復可能的文字重疊問題 */
-        .streamlit-expanderContent > div {
-            margin-bottom: 10px !important;
-        }
-        
-        /* 確保下拉選單正常顯示 */
-        .streamlit-expanderContent .stSelectbox > div {
+        /* 通用間距修復 */
+        details > div > div {
             margin-bottom: 15px !important;
+            clear: both !important;
         }
         
-        /* 確保複選框正常顯示 */
-        .streamlit-expanderContent .stCheckbox > div {
+        /* 修復文字重疊 - 使用更廣泛的選擇器 */
+        details summary ~ div > div {
             margin-bottom: 15px !important;
+            display: block !important;
+            clear: both !important;
+        }
+        
+        /* 確保所有表單元素有足夠間距 */
+        details div[class*="stSelectbox"],
+        details div[class*="stCheckbox"],
+        details div[class*="stButton"],
+        details div[class*="stMarkdown"] {
+            margin-bottom: 15px !important;
+            clear: both !important;
         }
         </style>
         """, unsafe_allow_html=True)
         
-        # 系統設定折疊選項 - 修復後的版本
+        # 系統設定折疊選項 - V22 使用通用選擇器版本
         with st.expander("⚙️ 系統設定", expanded=False):
             # 日誌級別設定
             st.markdown("**日誌級別**")
@@ -6240,7 +6273,7 @@ def create_sidebar():
                 "",
                 options=log_levels,
                 index=log_levels.index(st.session_state.get('log_level', "DEBUG")),
-                key="log_level_select",
+                key="log_level_select_v22_universal",
                 label_visibility="collapsed"
             )
             
@@ -6256,7 +6289,7 @@ def create_sidebar():
                 "啟用高性能模式",
                 value=st.session_state.get('performance_mode', False),
                 help="啟用後將減少日誌輸出，提高計算速度，但不會顯示詳細日誌",
-                key="performance_mode_check"
+                key="performance_mode_check_v22_universal"
             )
             
             if performance_mode != st.session_state.get('performance_mode', False):
@@ -6272,13 +6305,13 @@ def create_sidebar():
             st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
             
             # 添加清理日誌的按鈕
-            if st.button("清理日誌", key="clear_logs_btn"):
+            if st.button("清理日誌", key="clear_logs_btn_v22_universal"):
                 if 'logs' in st.session_state.debug_info:
                     st.session_state.debug_info['logs'] = []
                 st.success("已清理所有日誌")
             
             # 添加重設所有數據的按鈕
-            if st.button("重設所有數據緩存", key="reset_cache_btn", help="清除所有已計算的結果緩存，強制重新計算"):
+            if st.button("重設所有數據緩存", key="reset_cache_btn_v22_universal", help="清除所有已計算的結果緩存，強制重新計算"):
                 # 清除所有與分析相關的緩存
                 cache_keys = [
                     'mrb_analysis_results',

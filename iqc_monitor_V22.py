@@ -6078,10 +6078,10 @@ def create_sidebar():
         st.markdown("<hr style='margin: 25px 0; border: none; height: 1px; background-color: #eee;'>", unsafe_allow_html=True)
         
         st.markdown("""
-         <div style="display: flex; align-items: center; margin-bottom: 8px;">
-         <div class="upload-title" style="font-size: 20px; font-weight: 600;">
+        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+            <div class="upload-title" style="font-size: 20px; font-weight: 600;">
                 📅 日期篩選
-            </span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -6166,25 +6166,97 @@ def create_sidebar():
                 with st.spinner("準備匯出資料中..."):
                     export_processed_data()
         
-        # 系統設定折疊選項
+        # 修復系統設定折疊選項的CSS樣式
+        st.markdown("""
+        <style>
+        /* 修復系統設定區域的樣式 */
+        .streamlit-expanderHeader {
+            background-color: white !important;
+            padding: 10px !important;
+            border-radius: 6px !important;
+            margin-bottom: 5px !important;
+            color: #455A64 !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            line-height: 1.4 !important;
+        }
+        
+        .streamlit-expanderContent {
+            background-color: white !important;
+            padding: 15px !important;
+            border-radius: 6px !important;
+            margin-top: 5px !important;
+        }
+        
+        /* 確保系統設定內的元素正常顯示 */
+        .streamlit-expanderContent .stSelectbox label {
+            color: #333 !important;
+            font-size: 14px !important;
+            margin-bottom: 5px !important;
+        }
+        
+        .streamlit-expanderContent .stCheckbox label {
+            color: #333 !important;
+            font-size: 14px !important;
+        }
+        
+        .streamlit-expanderContent .stButton button {
+            background-color: #90A4AE !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            margin-top: 10px !important;
+        }
+        
+        .streamlit-expanderContent .stButton button:hover {
+            background-color: #78909C !important;
+        }
+        
+        /* 修復可能的文字重疊問題 */
+        .streamlit-expanderContent > div {
+            margin-bottom: 10px !important;
+        }
+        
+        /* 確保下拉選單正常顯示 */
+        .streamlit-expanderContent .stSelectbox > div {
+            margin-bottom: 15px !important;
+        }
+        
+        /* 確保複選框正常顯示 */
+        .streamlit-expanderContent .stCheckbox > div {
+            margin-bottom: 15px !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        # 系統設定折疊選項 - 修復後的版本
         with st.expander("⚙️ 系統設定", expanded=False):
             # 日誌級別設定
+            st.markdown("**日誌級別**")
             log_levels = ["DEBUG", "INFO", "WARNING", "ERROR"]
             selected_log_level = st.selectbox(
-                "日誌級別",
+                "",
                 options=log_levels,
-                index=log_levels.index(st.session_state.get('log_level', "DEBUG"))
+                index=log_levels.index(st.session_state.get('log_level', "DEBUG")),
+                key="log_level_select",
+                label_visibility="collapsed"
             )
             
             if selected_log_level != st.session_state.get('log_level', "DEBUG"):
                 st.session_state.log_level = selected_log_level
                 st.success(f"✅ 日誌級別已設為 {selected_log_level}")
             
+            # 添加間距
+            st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
+            
             # 性能模式設定
             performance_mode = st.checkbox(
                 "啟用高性能模式",
                 value=st.session_state.get('performance_mode', False),
-                help="啟用後將減少日誌輸出，提高計算速度，但不會顯示詳細日誌"
+                help="啟用後將減少日誌輸出，提高計算速度，但不會顯示詳細日誌",
+                key="performance_mode_check"
             )
             
             if performance_mode != st.session_state.get('performance_mode', False):
@@ -6196,14 +6268,17 @@ def create_sidebar():
                     st.session_state.log_level = "DEBUG"
                     st.info("已停用高性能模式，日誌級別自動設為DEBUG")
             
+            # 添加間距
+            st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
+            
             # 添加清理日誌的按鈕
-            if st.button("清理日誌"):
+            if st.button("清理日誌", key="clear_logs_btn"):
                 if 'logs' in st.session_state.debug_info:
                     st.session_state.debug_info['logs'] = []
                 st.success("已清理所有日誌")
             
             # 添加重設所有數據的按鈕
-            if st.button("重設所有數據緩存", help="清除所有已計算的結果緩存，強制重新計算"):
+            if st.button("重設所有數據緩存", key="reset_cache_btn", help="清除所有已計算的結果緩存，強制重新計算"):
                 # 清除所有與分析相關的緩存
                 cache_keys = [
                     'mrb_analysis_results',

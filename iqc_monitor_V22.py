@@ -6802,9 +6802,11 @@ def show_cover_page():
         for path in img_paths:
             if os.path.exists(path):
                 try:
-                    img = Image.open(resource_path("cover.png"))
+                    img = Image.open(path)  # 修正：使用實際的路徑而不是固定的 "cover.png"
+                    successful_path = path
                     break
-                except:
+                except Exception as e:
+                    print(f"無法開啟圖片 {path}: {e}")
                     continue
         
         if img:

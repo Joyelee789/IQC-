@@ -6166,186 +6166,225 @@ def create_sidebar():
                 with st.spinner("準備匯出資料中..."):
                     export_processed_data()
         
-        # 修復系統設定折疊選項的CSS樣式 - 針對 Streamlit Cloud 優化
+        # 修復系統設定折疊選項的CSS樣式 - 超強制版本針對 Streamlit Cloud
         st.markdown("""
         <style>
-        /* 針對 Streamlit Cloud 的系統設定優化 */
+        /* 超強制修復 Streamlit Cloud 中的系統設定樣式 */
         .streamlit-expanderHeader {
             background-color: white !important;
-            padding: 12px !important;
+            padding: 15px !important;
             border-radius: 8px !important;
-            margin-bottom: 8px !important;
+            margin: 10px 0 !important;
             color: #455A64 !important;
             font-weight: 600 !important;
             font-size: 16px !important;
-            line-height: 1.5 !important;
-            border: 1px solid #E0E0E0 !important;
+            line-height: 1.6 !important;
+            border: 2px solid #E0E0E0 !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
         }
 
         .streamlit-expanderContent {
             background-color: white !important;
-            padding: 20px !important;
+            padding: 25px !important;
             border-radius: 8px !important;
-            margin-top: 8px !important;
-            border: 1px solid #E0E0E0 !important;
+            margin: 10px 0 !important;
+            border: 2px solid #E0E0E0 !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
         }
 
-        /* 強制修復 Streamlit Cloud 中的選擇框樣式 */
-        .streamlit-expanderContent .stSelectbox {
-            margin-bottom: 20px !important;
+        /* 強制修復選擇框 - 使用更具體的選擇器 */
+        .streamlit-expanderContent div[data-testid="stSelectbox"] {
+            margin: 20px 0 !important;
+            clear: both !important;
         }
 
-        .streamlit-expanderContent .stSelectbox label {
-            color: #333 !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            margin-bottom: 8px !important;
-            display: block !important;
-            line-height: 1.4 !important;
+        .streamlit-expanderContent div[data-testid="stSelectbox"] label {
+            display: none !important; /* 完全隱藏原始標籤 */
         }
 
-        .streamlit-expanderContent .stSelectbox > div {
-            margin-top: 8px !important;
-            margin-bottom: 20px !important;
-        }
-
-        /* 強制修復複選框樣式 */
-        .streamlit-expanderContent .stCheckbox {
-            margin-bottom: 20px !important;
+        .streamlit-expanderContent div[data-testid="stSelectbox"] > div {
             margin-top: 15px !important;
+            margin-bottom: 25px !important;
         }
 
-        .streamlit-expanderContent .stCheckbox label {
+        /* 強制修復複選框 */
+        .streamlit-expanderContent div[data-testid="stCheckbox"] {
+            margin: 20px 0 !important;
+            clear: both !important;
+        }
+
+        .streamlit-expanderContent div[data-testid="stCheckbox"] label {
             color: #333 !important;
             font-size: 16px !important;
             font-weight: 500 !important;
-            line-height: 1.5 !important;
+            line-height: 1.8 !important;
             display: flex !important;
             align-items: center !important;
         }
 
-        /* 強制修復按鈕樣式 */
-        .streamlit-expanderContent .stButton {
-            margin-top: 15px !important;
-            margin-bottom: 10px !important;
+        /* 強制修復按鈕容器 */
+        .streamlit-expanderContent div[data-testid="stButton"] {
+            margin: 20px 0 !important;
+            clear: both !important;
         }
 
-        .streamlit-expanderContent .stButton button {
+        .streamlit-expanderContent div[data-testid="stButton"] button {
             background-color: #90A4AE !important;
             color: white !important;
             border: none !important;
             border-radius: 6px !important;
-            padding: 10px 20px !important;
+            padding: 12px 24px !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             width: 100% !important;
-            margin-top: 5px !important;
+            margin: 5px 0 !important;
+            cursor: pointer !important;
         }
 
-        .streamlit-expanderContent .stButton button:hover {
+        .streamlit-expanderContent div[data-testid="stButton"] button:hover {
             background-color: #78909C !important;
             transform: translateY(-1px) !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
         }
 
-        /* 添加間距分隔符 */
-        .settings-divider {
-            height: 1px;
-            background-color: #E0E0E0;
-            margin: 20px 0;
-            border: none;
+        /* 自定義分隔線樣式 */
+        .custom-settings-divider {
+            height: 2px !important;
+            background: linear-gradient(to right, transparent, #E0E0E0, transparent) !important;
+            margin: 25px 0 !important;
+            border: none !important;
         }
 
-        /* 確保文字不會重疊 */
-        .streamlit-expanderContent > div {
-            margin-bottom: 15px !important;
+        /* 自定義標題樣式 */
+        .custom-settings-title {
+            font-weight: 700 !important;
+            color: #333 !important;
+            margin: 15px 0 10px 0 !important;
+            font-size: 17px !important;
+            line-height: 1.4 !important;
+            padding: 5px 0 !important;
+            border-bottom: 1px solid #E0E0E0 !important;
+            display: block !important;
+        }
+
+        /* 強制清除浮動 */
+        .streamlit-expanderContent::after {
+            content: "" !important;
+            display: table !important;
             clear: both !important;
         }
 
-        /* 針對 Streamlit Cloud 的額外修正 */
-        .streamlit-expanderContent .element-container {
-            margin-bottom: 15px !important;
+        /* 針對所有子元素強制設定間距 */
+        .streamlit-expanderContent > * {
+            margin-bottom: 20px !important;
+            display: block !important;
+            clear: both !important;
         }
 
-        .streamlit-expanderContent .row-widget {
-            margin-bottom: 15px !important;
+        /* 特殊處理：確保每個組件都有獨立的空間 */
+        .streamlit-expanderContent .element-container,
+        .streamlit-expanderContent .row-widget,
+        .streamlit-expanderContent .stMarkdown {
+            margin-bottom: 20px !important;
+            clear: both !important;
+            width: 100% !important;
         }
         </style>
         """, unsafe_allow_html=True)
         
-        # 系統設定折疊選項 - V23 針對 Streamlit Cloud 優化版本
+        # 系統設定折疊選項 - 使用完全自定義的HTML結構
         with st.expander("⚙️ 系統設定", expanded=False):
-            # 日誌級別設定 - 使用 HTML 標籤避免重疊
-            st.markdown('<p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 16px;">日誌級別</p>', unsafe_allow_html=True)
+            # 使用 st.container 來確保更好的結構
+            container = st.container()
             
-            log_levels = ["DEBUG", "INFO", "WARNING", "ERROR"]
-            selected_log_level = st.selectbox(
-                "",
-                options=log_levels,
-                index=log_levels.index(st.session_state.get('log_level', "DEBUG")),
-                key="log_level_select_v23",
-                label_visibility="collapsed"
-            )
-            
-            if selected_log_level != st.session_state.get('log_level', "DEBUG"):
-                st.session_state.log_level = selected_log_level
-                st.success(f"✅ 日誌級別已設為 {selected_log_level}")
-            
-            # 間距分隔符
-            st.markdown('<hr class="settings-divider">', unsafe_allow_html=True)
-            
-            # 性能模式設定
-            st.markdown('<p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 16px;">性能設定</p>', unsafe_allow_html=True)
-            
-            performance_mode = st.checkbox(
-                "啟用高性能模式",
-                value=st.session_state.get('performance_mode', False),
-                help="啟用後將減少日誌輸出，提高計算速度，但不會顯示詳細日誌",
-                key="performance_mode_check_v23"
-            )
-            
-            if performance_mode != st.session_state.get('performance_mode', False):
-                st.session_state.performance_mode = performance_mode
-                if performance_mode:
-                    st.session_state.log_level = "WARNING"
-                    st.info("已啟用高性能模式，日誌級別自動設為WARNING")
-                else:
-                    st.session_state.log_level = "DEBUG"
-                    st.info("已停用高性能模式，日誌級別自動設為DEBUG")
-            
-            # 間距分隔符
-            st.markdown('<hr class="settings-divider">', unsafe_allow_html=True)
-            
-            # 系統操作按鈕
-            st.markdown('<p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 16px;">系統操作</p>', unsafe_allow_html=True)
-            
-            # 清理日誌的按鈕
-            if st.button("清理日誌", key="clear_logs_btn_v23", use_container_width=True):
-                if 'logs' in st.session_state.debug_info:
-                    st.session_state.debug_info['logs'] = []
-                st.success("已清理所有日誌")
-            
-            # 重設所有數據的按鈕
-            if st.button("重設所有數據緩存", key="reset_cache_btn_v23", use_container_width=True, help="清除所有已計算的結果緩存，強制重新計算"):
-                # 清除所有與分析相關的緩存
-                cache_keys = [
-                    'mrb_analysis_results',
-                    'trimmed_avg_efficiency',
-                    'trimmed_record_stats',
-                    'category_efficiency_data',
-                    'has_applied_selection',
-                    'selected_material_categories',
-                    'selected_category_mode',
-                    'selected_main_category',
-                    'selected_subcategories',
-                    'merge_categories'
-                ]
+            with container:
+                # 日誌級別設定 - 使用自定義標題
+                st.markdown('<div class="custom-settings-title">📋 日誌級別設定</div>', unsafe_allow_html=True)
                 
-                for key in cache_keys:
-                    if key in st.session_state:
-                        del st.session_state[key]
+                log_levels = ["DEBUG", "INFO", "WARNING", "ERROR"]
+                selected_log_level = st.selectbox(
+                    "選擇日誌級別",
+                    options=log_levels,
+                    index=log_levels.index(st.session_state.get('log_level', "DEBUG")),
+                    key="log_level_select_v23_fixed",
+                    help="選擇系統日誌的詳細程度"
+                )
                 
-                st.success("已清除所有數據緩存，將在下次更新時重新計算")
+                if selected_log_level != st.session_state.get('log_level', "DEBUG"):
+                    st.session_state.log_level = selected_log_level
+                    st.success(f"✅ 日誌級別已設為 {selected_log_level}")
+                
+                # 自定義分隔線
+                st.markdown('<hr class="custom-settings-divider">', unsafe_allow_html=True)
+                
+                # 性能模式設定
+                st.markdown('<div class="custom-settings-title">⚡ 性能模式設定</div>', unsafe_allow_html=True)
+                
+                performance_mode = st.checkbox(
+                    "啟用高性能模式（減少日誌輸出，提高運行速度）",
+                    value=st.session_state.get('performance_mode', False),
+                    key="performance_mode_check_v23_fixed",
+                    help="啟用後將減少日誌輸出，提高計算速度，但不會顯示詳細日誌"
+                )
+                
+                if performance_mode != st.session_state.get('performance_mode', False):
+                    st.session_state.performance_mode = performance_mode
+                    if performance_mode:
+                        st.session_state.log_level = "WARNING"
+                        st.info("🚀 已啟用高性能模式，日誌級別自動設為WARNING")
+                    else:
+                        st.session_state.log_level = "DEBUG"
+                        st.info("🔧 已停用高性能模式，日誌級別自動設為DEBUG")
+                
+                # 自定義分隔線
+                st.markdown('<hr class="custom-settings-divider">', unsafe_allow_html=True)
+                
+                # 系統操作區域
+                st.markdown('<div class="custom-settings-title">🛠️ 系統操作</div>', unsafe_allow_html=True)
+                
+                # 使用兩列布局放置按鈕
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    if st.button("🗑️ 清理日誌", key="clear_logs_btn_v23_fixed", use_container_width=True):
+                        if 'debug_info' in st.session_state and 'logs' in st.session_state.debug_info:
+                            st.session_state.debug_info['logs'] = []
+                        st.success("✅ 已清理所有日誌")
+                
+                with col2:
+                    if st.button("🔄 重設緩存", key="reset_cache_btn_v23_fixed", use_container_width=True):
+                        cache_keys = [
+                            'mrb_analysis_results',
+                            'trimmed_avg_efficiency',
+                            'trimmed_record_stats',
+                            'category_efficiency_data',
+                            'has_applied_selection',
+                            'selected_material_categories',
+                            'selected_category_mode',
+                            'selected_main_category',
+                            'selected_subcategories',
+                            'merge_categories'
+                        ]
+                        
+                        cleared_count = 0
+                        for key in cache_keys:
+                            if key in st.session_state:
+                                del st.session_state[key]
+                                cleared_count += 1
+                        
+                        st.success(f"✅ 已清除 {cleared_count} 項數據緩存")
+                
+                # 添加一個額外的說明區域
+                st.markdown("""
+                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 20px; border-left: 4px solid #90A4AE;">
+                    <small style="color: #666;">
+                        <strong>💡 提示：</strong><br>
+                        • 高性能模式適合處理大量數據<br>
+                        • 清理日誌可釋放記憶體空間<br>
+                        • 重設緩存可解決數據不一致問題
+                    </small>
+                </div>
+                """, unsafe_allow_html=True)
 
 
 # 改进后的文件分类函数

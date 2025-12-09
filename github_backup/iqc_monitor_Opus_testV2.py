@@ -346,45 +346,39 @@ def get_guide_html():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IQC 效率管理系統指南 v2</title>
+    <title>IQC 效率管理系統指南</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* 1. 全局設定 - 現代明亮風格 v2 */
         :root {
             --primary-blue: #2563eb;
             --sky-blue: #0ea5e9;
             --slate-dark: #0f172a;
             --slate-gray: #64748b;
-            --light-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --success-green: #10b981;
-            --warning-red: #ef4444;
-            --alert-orange: #f59e0b;
-            --purple-accent: #8b5cf6;
+            --light-bg: #f1f5f9;
+            --success-green: #16a34a;
+            --warning-red: #dc2626;
+            --alert-orange: #d97706;
+            --white: #ffffff;
         }
-
         * { box-sizing: border-box; }
-
         body {
-            background-color: #f1f5f9;
+            background-color: var(--light-bg);
             margin: 0;
             padding: 40px 20px;
             font-family: 'Noto Sans TC', sans-serif;
-            color: var(--slate-dark);
+            color: #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 40px;
         }
-
-        /* 投影片容器 */
         .slide-container {
-            background: var(--card-bg);
+            background: var(--white);
             border-radius: 24px;
-            box-shadow: 0 20px 40px -5px rgba(148, 163, 184, 0.15);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
             width: 100%;
             max-width: 1200px;
             aspect-ratio: 16/9;
@@ -396,80 +390,71 @@ def get_guide_html():
             display: flex;
             flex-direction: column;
         }
-
-        /* 裝飾性背景 */
         .slide-container::before {
             content: '';
             position: absolute;
-            top: -15%;
+            top: -10%;
             right: -5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .slide-container::after {
-            content: '';
-            position: absolute;
-            bottom: -10%;
-            left: -5%;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
             border-radius: 50%;
             z-index: 0;
             pointer-events: none;
         }
-
         .content-area {
             position: relative;
             z-index: 1;
             flex: 1;
+            min-height: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
-        /* 2. 排版 */
+        h1, h2, h3, h4 {
+            color: var(--slate-dark);
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
         h1 { 
-            font-size: clamp(40px, 5vw, 64px); 
+            font-size: clamp(36px, 5vw, 64px); 
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            background: linear-gradient(120deg, var(--primary-blue), var(--sky-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 0 0 20px 0;
-            font-weight: 800;
+            margin-bottom: 20px;
         }
-
+        .subtitle-tw {
+            font-size: 24px;
+            color: var(--slate-gray);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
         .slide-title {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 700;
-            color: var(--slate-dark);
+            color: #1e293b;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 15px;
-            padding-bottom: 20px;
             border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 20px;
         }
-
         .slide-title::before {
             content: '';
             display: block;
             width: 6px;
-            height: 32px;
+            height: 36px;
             background: linear-gradient(to bottom, var(--primary-blue), var(--sky-blue));
             border-radius: 4px;
         }
-
         .slide-title span {
-            font-size: 12px;
+            font-size: 13px;
             font-family: 'Outfit', sans-serif;
             color: var(--slate-gray);
-            background: #f1f5f9;
+            background: var(--light-bg);
             padding: 6px 12px;
             border-radius: 6px;
             letter-spacing: 0.1em;
@@ -477,100 +462,82 @@ def get_guide_html():
             font-weight: 600;
             margin-left: auto;
         }
-
         p, li {
             color: #475569;
             font-size: 18px;
             line-height: 1.6;
-            margin-bottom: 15px;
         }
-
-        strong { color: var(--slate-dark); font-weight: 700; }
-        .highlight { color: var(--primary-blue); font-weight: 600; }
-        .warning { color: var(--warning-red); font-weight: 600; }
-        .success { color: var(--success-green); font-weight: 600; }
-
-        /* 3. 佈局元件 */
+        strong { font-weight: 700; color: var(--slate-dark); }
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
-            align-items: center;
-            height: 100%;
+            align-items: stretch;
+            height: auto;
         }
-
         .tiled-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: flex;
             gap: 20px;
             width: 100%;
+            height: auto;
+            flex: 1;
+            align-items: stretch;
         }
-
-        /* 4. 卡片樣式 */
         .metric-card {
-            background: var(--card-bg);
+            background: var(--white);
             border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+        .metric-card h3 { color: var(--slate-gray); font-size: 18px; margin-bottom: 10px; font-weight: 500; }
+        .metric-card .value { font-size: 48px; font-weight: 800; color: var(--slate-dark); margin-bottom: 8px; font-family: 'Outfit', sans-serif; }
+        .metric-card .desc { font-size: 15px; color: var(--slate-gray); }
+        .tile {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-            border-color: var(--sky-blue);
+        .tile:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-blue);
         }
-
-        .metric-card h3 { color: var(--slate-gray); font-size: 16px; margin: 0 0 10px 0; font-weight: 500; }
-        .metric-card .value { font-size: 42px; font-weight: 800; color: var(--slate-dark); margin-bottom: 8px; font-family: 'Outfit'; }
-        .metric-card .desc { font-size: 14px; color: #94a3b8; line-height: 1.4; }
-
-        /* 5. 邏輯區塊 */
-        .logic-box {
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 10px 0;
-            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
-            color: var(--slate-dark);
-            text-align: center; /* 確保內容置中 */
-        }
-
-        .formula {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary-blue);
-            padding: 10px;
-        }
-
-        /* 6. 五維雷達圖卡片 */
-        .radar-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            height: 100%;
-        }
-        .radar-icon {
-            font-size: 32px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--purple-accent));
+        .tile i { 
+            font-size: 32px; 
+            margin-bottom: 20px; 
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* 7. 象限圖 */
+        .tile h3 { font-size: 20px; margin-bottom: 10px; color: #1e293b; }
+        .tile p { font-size: 15px; color: var(--slate-gray); margin: 0; }
         .matrix-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             gap: 15px;
+            width: 100%;
             height: 400px;
         }
         .quadrant {
@@ -580,124 +547,165 @@ def get_guide_html():
             flex-direction: column;
             justify-content: center;
             border: 1px solid #e2e8f0;
-            background: #fff;
-            position: relative;
+            background: var(--white);
+            transition: all 0.3s;
         }
-        .quadrant h4 { font-size: 18px; margin: 0 0 5px 0; color: var(--slate-dark); }
-        .quadrant p { font-size: 14px; margin: 0; color: #64748b; }
-        
-        /* 象限顏色 */
-        .q-gold { border-color: #10b981; background: #ecfdf5; }
-        .q-risk { border-color: #f59e0b; background: #fffbeb; }
-        .q-work { border-color: #3b82f6; background: #eff6ff; }
-        .q-help { border-color: #94a3b8; background: #f8fafc; }
-
-        /* 頁碼 */
+        .q-top-right { background: #f0fdf4; border-color: #bbf7d0; }
+        .q-bottom-right { background: #fffbeb; border-color: #fde68a; }
+        .q-top-left { background: #eff6ff; border-color: #bfdbfe; }
+        .q-bottom-left { background: #f8fafc; border-color: #e2e8f0; }
+        .quadrant h4 { font-size: 18px; margin-bottom: 5px; color: var(--slate-dark); }
+        .quadrant p { font-size: 14px; margin: 0; color: #475569; font-weight: 500; }
+        .sub-text { font-size: 13px; color: var(--slate-gray); margin-top: 5px; font-weight: 400; }
+        .image-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            max-height: 400px;
+        }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .modern-list { list-style: none; padding: 0; margin: 0; }
+        .modern-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 18px;
+            color: #475569;
+        }
+        .modern-list li::before {
+            content: '\\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            background: #e0f2fe;
+            color: #0284c7;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .alert-card {
+            border-radius: 16px;
+            padding: 30px;
+            height: 100%;
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .alert-flash { border-left: 6px solid var(--warning-red); }
+        .alert-turtle { border-left: 6px solid var(--primary-blue); }
+        .formula-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            color: var(--slate-dark);
+            font-size: 20px;
+            font-weight: 500;
+        }
         .page-number {
             position: absolute;
             bottom: 30px;
             right: 40px;
             font-size: 14px;
             color: #cbd5e1;
-            font-family: 'Outfit';
+            font-family: 'Outfit', sans-serif;
         }
-
-        /* 列表 */
-        .modern-list li {
-            padding-left: 28px;
-            position: relative;
-            margin-bottom: 12px;
+        .highlight { color: var(--primary-blue); font-weight: 600; }
+        .warning { color: var(--warning-red); font-weight: 600; }
+        .success { color: var(--success-green); font-weight: 600; }
+        @media (max-width: 768px) {
+            .slide-container { padding: 30px; height: auto; aspect-ratio: auto; }
+            .two-column, .tiled-content { grid-template-columns: 1fr; flex-direction: column; }
+            .image-wrapper { height: 200px; }
+            .matrix-grid { height: auto; grid-template-columns: 1fr; grid-template-rows: auto; }
         }
-        .modern-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--primary-blue);
-            font-size: 14px;
-            top: 5px;
-        }
-
     </style>
 </head>
 <body>
-
     <!-- Slide 1: 封面 -->
-    <div class="slide-container">
-        <div class="content-area" style="text-align: center; align-items: center;">
-            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #2563eb, #8b5cf6); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);">
+    <div class="slide-container" id="slide1">
+        <div class="content-area" style="align-items: center; text-align: center;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #2563eb, #0ea5e9); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);">
                 <i class="fa-solid fa-chart-line" style="color: white; font-size: 36px;"></i>
             </div>
-
-            <p style="text-transform: uppercase; letter-spacing: 4px; color: #64748b; font-size: 14px; margin-bottom: 15px; font-weight: 600; font-family: 'Outfit';">SQM / IQC Management System</p>
-            
-            <h1 style="margin-bottom: 10px;">IQC 效率管理系統</h1>
-            <p style="font-size: 24px; color: #64748b; margin-top: 5px;">數據驅動的主管決策指南 (v2)</p>
-            
-            <div style="margin-top: 60px; display: flex; gap: 15px; justify-content: center;">
-                <div style="padding: 8px 24px; background: #fff; color: #0f172a; border-radius: 50px; border: 1px solid #e2e8f0; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px;">
-                    <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></span> Updated for Logic v2
+            <p style="text-transform: uppercase; letter-spacing: 3px; color: #64748b; font-size: 14px; margin-bottom: 10px; font-weight: 600; font-family: 'Outfit';">SQM / IQC Management Module</p>
+            <h1>IQC 效率管理系統</h1>
+            <p class="subtitle-tw">數據驅動的主管決策指南</p>
+            <div style="margin-top: 50px; display: flex; gap: 15px; justify-content: center;">
+                <div style="padding: 8px 20px; background: #ffffff; color: #334155; border-radius: 50px; border: 1px solid #e2e8f0; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span> v2.5 Analytics
                 </div>
-                <div style="padding: 8px 24px; background: #f1f5f9; color: #64748b; border-radius: 50px; font-size: 14px; font-weight: 500;">
-                    Confidential
-                </div>
+                <div style="padding: 8px 20px; background: #f1f5f9; color: #64748b; border-radius: 50px; font-size: 14px; font-weight: 500;">Confidential</div>
             </div>
         </div>
         <div class="page-number">01</div>
     </div>
 
-    <!-- Slide 2: 核心價值 -->
-    <div class="slide-container">
+    <!-- Slide 2: 管理核心價值 -->
+    <div class="slide-container" id="slide2">
         <h2 class="slide-title">管理核心價值 <span>PHILOSOPHY</span></h2>
         <div class="content-area">
             <div class="two-column">
                 <div>
-                    <h3 style="color: #1e293b; margin-bottom: 25px; font-size: 26px;">為什麼需要這套系統？</h3>
+                    <h3 style="color: #1e293b; margin-bottom: 25px; font-size: 26px; line-height: 1.4;">為什麼我們需要<br>這套系統？</h3>
                     <ul class="modern-list">
                         <li>從 <strong>「憑感覺」</strong> 轉向 <span class="highlight">「數據化決策」</span>。</li>
-                        <li><strong>公平性原則：</strong> 自動校正 PCB 複雜度與異常處理 (MRB) 的時間成本。</li>
-                        <li><strong>行為可視化：</strong> 識別「極速檢驗」與「無效工時」，看見人員真實習慣。</li>
-                        <li><strong>多維度評估：</strong> 不只看快慢，更看品質 (MRB率)、穩定度與配合度。</li>
+                        <li>傳統管理僅看「檢驗批數」，忽略了料號複雜度與異常處理耗時。</li>
+                        <li><strong>行為可視化：</strong> 看見人員真實的檢驗習慣（快而草率？還是慢工出細活？）。</li>
+                        <li><strong>負載公平化：</strong> 綜合考量 PCB 複雜度與額外任務，真實反映工作量。</li>
                     </ul>
                 </div>
-                <div class="image-wrapper" style="border-radius: 20px; overflow: hidden; height: 100%; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);">
-                    <!-- 實際應用中請替換為真實圖片，此為佔位符 -->
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=2070" alt="Team meeting">
                 </div>
             </div>
         </div>
         <div class="page-number">02</div>
     </div>
 
-    <!-- Slide 3: 核心指標邏輯 -->
-    <div class="slide-container">
-        <h2 class="slide-title">核心指標：效率比值 <span>METRIC LOGIC</span></h2>
+    <!-- Slide 3: 核心指標 -->
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">核心指標：效率比值 <span>CORE METRIC</span></h2>
         <div class="content-area">
-            <div class="logic-box" style="margin-bottom: 40px;">
-                <div class="formula">
-                    效率 = ( 標準工時 <span style="color:#ef4444; font-size: 0.8em;">+ MRB補償</span> ) ÷ 實際耗時
-                </div>
-                <p style="text-align: center; font-size: 14px; margin-top: 10px; color: #64748b;">
-                    <i class="fa-solid fa-circle-info"></i> 系統會自動偵測 MRB 欄位，若有異常紀錄，標準工時自動 <strong>+30 分鐘</strong>。
-                </p>
-            </div>
-            
+            <div class="formula-box">效率 = 標準工時 (應耗時) ÷ 實際耗時 (投入)</div>
+            <p style="text-align: center; margin-bottom: 40px; color: #64748b;">透過標準與實際的對比，客觀評估人員績效</p>
             <div class="tiled-content">
-                <div class="metric-card" style="border-top: 5px solid #10b981;">
-                    <h3><i class="fa-solid fa-arrow-trend-up" style="color:#10b981;"></i> 高效率</h3>
-                    <div class="value" style="color:#10b981;">> 1.2</div>
-                    <p class="desc">動作熟練的老手，<br>或該料號標準過鬆。</p>
+                <div class="metric-card" style="border-top: 6px solid #22c55e;">
+                    <div style="width: 50px; height: 50px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #16a34a; font-size: 24px;">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </div>
+                    <h3>高效率區間</h3>
+                    <div class="value" style="color: #16a34a;">> 1.2</div>
+                    <p class="desc">動作熟練的老手，或是該料號標準工時設定過於寬鬆。</p>
                 </div>
-                <div class="metric-card" style="border-top: 5px solid #3b82f6;">
-                    <h3><i class="fa-solid fa-check" style="color:#3b82f6;"></i> 標準區間</h3>
-                    <div class="value" style="color:#3b82f6;">1.0</div>
-                    <p class="desc">合格檢驗員的基準線，<br>投入與產出相符。</p>
+                <div class="metric-card" style="border-top: 6px solid #3b82f6;">
+                    <div style="width: 50px; height: 50px; background: #dbeafe; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #2563eb; font-size: 24px;">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3>標準區間</h3>
+                    <div class="value" style="color: #2563eb;">1.0</div>
+                    <p class="desc">合格檢驗員的基準線，投入時間與標準預期相符。</p>
                 </div>
-                <div class="metric-card" style="border-top: 5px solid #ef4444;">
-                    <h3><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> 低效率</h3>
-                    <div class="value" style="color:#ef4444;">< 0.8</div>
-                    <p class="desc">新人、遇到棘手問題，<br>或標準設定過緊。</p>
+                <div class="metric-card" style="border-top: 6px solid #ef4444;">
+                    <div style="width: 50px; height: 50px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: #dc2626; font-size: 24px;">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3>低效率區間</h3>
+                    <div class="value" style="color: #dc2626;">< 0.8</div>
+                    <p class="desc">新人、遇到棘手異常問題，或是標準工時設定過緊。</p>
                 </div>
             </div>
         </div>
@@ -705,42 +713,35 @@ def get_guide_html():
     </div>
 
     <!-- Slide 4: 五維能力雷達 -->
-    <div class="slide-container">
+    <div class="slide-container" id="slide4">
         <h2 class="slide-title">五維能力雷達分析 <span>CAPABILITY</span></h2>
         <div class="content-area">
-            <p style="text-align: center; margin-bottom: 40px; color: #64748b;">
-                綜合評分 = 速度(30%) + 嚴謹度(25%) + 穩定度(20%) + 負載力(15%) + 配合度(10%)
-            </p>
-            <div class="tiled-content" style="grid-template-columns: repeat(5, 1fr);">
-                <div class="radar-card">
-                    <i class="fa-solid fa-bolt radar-icon"></i>
-                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 5px;">速度</h3>
-                    <div style="font-size: 12px; color: #94a3b8;">Speed</div>
-                    <p style="font-size: 13px; text-align: center; margin-top: 10px;">加權後的檢驗效率比值。</p>
+            <p style="margin-bottom: 40px; text-align: center; color: #64748b;">系統將人員能力拆解為五個維度，協助主管進行「差異化管理」</p>
+            <div class="tiled-content">
+                <div class="tile">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>速度 (Speed)</h3>
+                    <p>加權後的檢驗快慢。<br>反映熟練度。</p>
                 </div>
-                <div class="radar-card">
-                    <i class="fa-solid fa-magnifying-glass-chart radar-icon"></i>
-                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 5px;">嚴謹度</h3>
-                    <div style="font-size: 12px; color: #94a3b8;">Rigor</div>
-                    <p style="font-size: 13px; text-align: center; margin-top: 10px;"><strong>MRB 開立率</strong>。<br>越高代表把關越嚴。</p>
+                <div class="tile">
+                    <i class="fa-solid fa-microscope"></i>
+                    <h3>嚴謹度 (Rigor)</h3>
+                    <p><strong>MRB 開立率</strong>。<br>數值越高，代表把關越嚴。</p>
                 </div>
-                <div class="radar-card">
-                    <i class="fa-solid fa-scale-balanced radar-icon"></i>
-                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 5px;">穩定度</h3>
-                    <div style="font-size: 12px; color: #94a3b8;">Stability</div>
-                    <p style="font-size: 13px; text-align: center; margin-top: 10px;">公式：<code>100/(1+標準差*2)</code>。<br>表現一致性。</p>
+                <div class="tile">
+                    <i class="fa-solid fa-scale-unbalanced"></i>
+                    <h3>穩定度 (Stability)</h3>
+                    <p>效率標準差的倒數。<br>表現一致，不會忽快忽慢。</p>
                 </div>
-                <div class="radar-card">
-                    <i class="fa-solid fa-weight-hanging radar-icon"></i>
-                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 5px;">負載力</h3>
-                    <div style="font-size: 12px; color: #94a3b8;">Capacity</div>
-                    <p style="font-size: 13px; text-align: center; margin-top: 10px;">個人佔團隊總檢驗工時的百分比。</p>
+                <div class="tile">
+                    <i class="fa-solid fa-weight-hanging"></i>
+                    <h3>負載力 (Capacity)</h3>
+                    <p>承擔了團隊多少 %<br>的總檢驗工時。</p>
                 </div>
-                <div class="radar-card">
-                    <i class="fa-solid fa-handshake-angle radar-icon"></i>
-                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 5px;">配合度</h3>
-                    <div style="font-size: 12px; color: #94a3b8;">Support</div>
-                    <p style="font-size: 13px; text-align: center; margin-top: 10px;">額外任務 (非檢驗) 的投入佔比。</p>
+                <div class="tile">
+                    <i class="fa-solid fa-handshake-angle"></i>
+                    <h3>配合度 (Support)</h3>
+                    <p>承擔了團隊多少 %<br>的額外任務 (非檢驗)。</p>
                 </div>
             </div>
         </div>
@@ -748,43 +749,39 @@ def get_guide_html():
     </div>
 
     <!-- Slide 5: 戰略矩陣 -->
-    <div class="slide-container">
+    <div class="slide-container" id="slide5">
         <h2 class="slide-title">品質 vs. 速度 戰略矩陣 <span>STRATEGY</span></h2>
         <div class="content-area">
             <div class="two-column">
                 <div class="matrix-grid">
-                    <!-- 左上 -->
-                    <div class="quadrant q-work">
-                        <h4 style="color:#3b82f6;"><i class="fa-solid fa-user-shield"></i> 苦幹實幹型</h4>
+                    <div class="quadrant q-top-left">
+                        <h4 style="color:#2563eb;"><i class="fa-solid fa-user-shield"></i> 苦幹實幹型</h4>
                         <p>低效率 / 高 MRB</p>
-                        <p class="sub-text" style="font-size: 12px;">品質守門員。需給予效率輔導，或安排高難度料件。</p>
+                        <p class="sub-text">品質守門員。需給予效率輔導，或安排高難度料件。</p>
                     </div>
-                    <!-- 右上 -->
-                    <div class="quadrant q-gold">
-                        <h4 style="color:#10b981;"><i class="fa-solid fa-medal"></i> 金牌檢驗員</h4>
+                    <div class="quadrant q-top-right">
+                        <h4 style="color:#16a34a;"><i class="fa-solid fa-medal"></i> 金牌檢驗員</h4>
                         <p>高效率 / 高 MRB</p>
-                        <p class="sub-text" style="font-size: 12px;">快且準。團隊的核心資產，應優先保留與獎勵。</p>
+                        <p class="sub-text">快且準。列為升遷重點，請其擔任導師。</p>
                     </div>
-                    <!-- 左下 -->
-                    <div class="quadrant q-help">
+                    <div class="quadrant q-bottom-left">
                         <h4 style="color:#64748b;"><i class="fa-solid fa-chalkboard-user"></i> 需輔導區</h4>
                         <p>低效率 / 低 MRB</p>
-                        <p class="sub-text" style="font-size: 12px;">慢又抓不到重點。新人或不適任，需安排 OJT。</p>
+                        <p class="sub-text">慢又抓不到重點。新人或不適任，需安排 OJT。</p>
                     </div>
-                    <!-- 右下 -->
-                    <div class="quadrant q-risk">
-                        <h4 style="color:#f59e0b;"><i class="fa-solid fa-triangle-exclamation"></i> 高效但寬鬆</h4>
+                    <div class="quadrant q-bottom-right">
+                        <h4 style="color:#d97706;"><i class="fa-solid fa-triangle-exclamation"></i> 高效但寬鬆</h4>
                         <p>高效率 / 低 MRB</p>
-                        <p class="sub-text" style="font-size: 12px;">高風險群。可能是經驗豐富一眼過，也可能是放水。<br><strong>需加強稽核。</strong></p>
+                        <p class="sub-text">高風險群。可能是經驗豐富一眼過，也可能是放水。</p>
                     </div>
                 </div>
                 <div style="padding-left: 20px;">
                     <h3 style="margin-bottom: 20px; color: #1e293b;">主管管理策略</h3>
                     <ul class="modern-list">
-                        <li><strong>X 軸 (效率)：</strong> 使用加權效率中位數切分。</li>
-                        <li><strong>Y 軸 (品質)：</strong> 使用 MRB 開立率中位數切分。</li>
-                        <li><span class="success">右上象限：</span> 請其擔任導師 (Mentor)。</li>
-                        <li><span class="warning">右下象限：</span> 重點關注對象，極速卻無產出異常，需確認是否落實檢驗。</li>
+                        <li><strong>X 軸 (效率)：</strong> 檢驗速度快慢。</li>
+                        <li><strong>Y 軸 (品質)：</strong> MRB 開立率 (嚴謹度)。</li>
+                        <li><span class="success">右上象限：</span> 團隊的核心資產，優先保留。</li>
+                        <li><span class="warning">右下象限：</span> 重點關注對象，<strong class="warning">需加強稽核</strong>確認是否落實檢驗。</li>
                     </ul>
                 </div>
             </div>
@@ -793,58 +790,33 @@ def get_guide_html():
     </div>
 
     <!-- Slide 6: 異常偵測 -->
-    <div class="slide-container">
+    <div class="slide-container" id="slide6">
         <h2 class="slide-title">風險管理：異常偵測 <span>RISK CONTROL</span></h2>
         <div class="content-area">
-            <div style="background: #fff1f2; padding: 15px 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #ef4444;">
-                <p style="margin: 0; color: #991b1b; font-size: 16px;">
-                    <i class="fa-solid fa-robot"></i> 系統自動邏輯偵測，協助主管抓出潛在合規問題。
-                </p>
+            <div style="background: #eff6ff; padding: 15px 25px; border-radius: 12px; margin-bottom: 40px; border-left: 4px solid #3b82f6;">
+                <p style="margin: 0; color: #1e40af; font-size: 16px;">系統自動扮演「黑臉」，透過數據邏輯抓出潛在合規問題。</p>
             </div>
-            
-            <div class="tiled-content">
-                <!-- Flash Alert -->
-                <div class="metric-card" style="border-top: 6px solid #ef4444; text-align: left; align-items: flex-start;">
-                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 15px;">
-                        <h3 style="font-size: 20px; color: #ef4444; margin: 0;">⚡ 極速檢驗警示 (Flash)</h3>
-                        <i class="fa-solid fa-bolt" style="color: #ef4444; font-size: 24px;"></i>
+            <div class="two-column">
+                <div class="alert-card alert-flash">
+                    <div style="font-size: 40px; color: #ef4444; margin-bottom: 20px;">
+                        <i class="fa-solid fa-bolt"></i> 極速檢驗警示 (Flash)
                     </div>
-                    <p><strong>觸發條件：</strong><br>效率 > 3.0 (可疑) 或 > 5.0 (極度可疑)</p>
-                    <p style="font-size: 14px; color: #64748b;">
-                        <strong>解讀：</strong> 超出人類極限。極高機率為「假檢驗」或「僅做帳面」。
-                    </p>
-                    <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; width: 100%;">
-                        <span class="warning">行動：</span> 「需要抽查確認」，關鍵在於有沒有對應的品質問題回饋。
+                    <h3 style="color: #1e293b; font-size: 22px; margin-bottom: 15px;">這是不可能的任務？</h3>
+                    <p><strong>觸發條件：</strong> 效率 > 3.0~5.0 (比標準快 3-5 倍)。</p>
+                    <p><strong>解讀：</strong> 超出人類極限。極高機率為「假檢驗」或「僅做帳面」。</p>
+                    <div style="margin-top: 25px; padding: 15px; background: #fef2f2; border-radius: 8px; color: #991b1b; font-size: 16px; font-weight: 500;">
+                        <i class="fa-solid fa-circle-exclamation"></i> 行動：調閱監視器或進行重驗 (Re-inspection)。
                     </div>
                 </div>
-                
-                <!-- Turtle Alert -->
-                <div class="metric-card" style="border-top: 6px solid #3b82f6; text-align: left; align-items: flex-start;">
-                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 15px;">
-                        <h3 style="font-size: 20px; color: #3b82f6; margin: 0;">🐢 無效工時警示 (Turtle)</h3>
-                        <i class="fa-solid fa-user-clock" style="color: #3b82f6; font-size: 24px;"></i>
+                <div class="alert-card alert-turtle">
+                    <div style="font-size: 40px; color: #3b82f6; margin-bottom: 20px;">
+                        <i class="fa-solid fa-user-clock"></i> 無效工時警示 (Turtle)
                     </div>
-                    <p><strong>觸發條件：</strong><br>效率 < 0.3 且 <strong>無 MRB</strong> (耗時>10分)</p>
-                    <p style="font-size: 14px; color: #64748b;">
-                        <strong>解讀：</strong> 花了很多時間卻沒有產出。可能是摸魚、受機台故障影響，或料件整理耗時。
-                    </p>
-                    <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; width: 100%;">
-                        <span class="highlight">行動：</span> 現場關懷 (Gemba Walk)。
-                    </div>
-                </div>
-
-                <!-- Bias Analysis -->
-                <div class="metric-card" style="border-top: 6px solid #f59e0b; text-align: left; align-items: flex-start;">
-                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 15px;">
-                        <h3 style="font-size: 20px; color: #f59e0b; margin: 0;">⚖️ 標準工時偏差</h3>
-                        <i class="fa-solid fa-scale-unbalanced" style="color: #f59e0b; font-size: 24px;"></i>
-                    </div>
-                    <p><strong>觸發條件：</strong><br>群體中位數 > 1.5 (過鬆) 或 < 0.5 (過緊)</p>
-                    <p style="font-size: 14px; color: #64748b;">
-                        <strong>解讀：</strong> 如果某類料號「所有人」都異常快或慢，代表 SOP 標準工時設定有誤。
-                    </p>
-                    <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; width: 100%;">
-                        <span style="color:#d97706; font-weight:600;">行動：</span> 修正系統標準參數。
+                    <h3 style="color: #1e293b; font-size: 22px; margin-bottom: 15px;">時間去哪了？</h3>
+                    <p><strong>觸發條件：</strong> 效率 < 0.3 且 <strong>無 MRB 產出</strong>。</p>
+                    <p><strong>解讀：</strong> 花了很多時間卻沒有產出。可能是摸魚、受機台故障影響，或料件整理耗時。</p>
+                    <div style="margin-top: 25px; padding: 15px; background: #eff6ff; border-radius: 8px; color: #1e40af; font-size: 16px; font-weight: 500;">
+                        <i class="fa-solid fa-shoe-prints"></i> 行動：現場關懷 (Gemba Walk)，了解阻礙原因。
                     </div>
                 </div>
             </div>
@@ -852,55 +824,44 @@ def get_guide_html():
         <div class="page-number">06</div>
     </div>
 
-    <!-- Slide 7: 工作負載與檢驗負載 -->
-    <div class="slide-container">
-        <h2 class="slide-title">工作負載與檢驗負載 <span>WORKLOAD</span></h2>
+    <!-- Slide 7: 工作負載 -->
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title">工作負載與時間分配 <span>WORKLOAD</span></h2>
         <div class="content-area">
             <div class="two-column">
-                <!-- 左側欄位：內容置中對齊 -->
-                <div style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    
-                    <h3 style="margin: 0 auto 20px auto; color: #1e293b; text-align: center;">1. 工作負載指數 (Total Load)</h3>
-                    <div class="logic-box" style="margin: 0 auto;">
-                        <div class="formula" style="font-size: 18px;">
-                            指數 = ( 檢驗標準工時 + 額外任務 ) ÷ 480分鐘
-                        </div>
-                    </div>
-                    <p style="font-size: 16px; color: #64748b; margin-top: 10px; text-align: center;">
-                        衡量人員的<strong>整體忙碌程度</strong>，包含正職與雜項。
-                    </p>
-
-                    <h3 style="margin: 30px auto 20px auto; color: #1e293b; text-align: center;">2. 檢驗負載指數 (Inspection Load)</h3>
-                    <div class="logic-box" style="border-color: #3b82f6; background-color: #eff6ff; margin: 0 auto;">
-                        <div class="formula" style="font-size: 18px; color: #1e40af;">
-                            指數 = 總檢驗時間 ÷ ( 總工作時間 - 額外任務時間 )
-                        </div>
-                    </div>
-                    <p style="font-size: 16px; color: #64748b; margin-top: 10px; text-align: center;">
-                        衡量人員在<strong>扣除雜事後的可用時間內</strong>，檢驗工作的飽和度。
-                    </p>
-                </div>
-                
-                <div style="background: #fff; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <h3 style="font-size: 18px; color: #64748b; margin-bottom: 20px; text-align: center;">指標解讀範例</h3>
-                    
-                    <ul class="modern-list">
-                        <li>
-                            <strong style="color: #ef4444;">檢驗負載 > 1.0</strong>：
-                            表示即便扣除雜事，該員的檢驗量仍超過其可用時間，<span style="color: #ef4444;">純檢驗工作過重</span>。
-                        </li>
-                        <li>
-                            <strong style="color: #f59e0b;">工作負載 > 1.0 但 檢驗負載 < 1.0</strong>：
-                            表示該員雖忙碌，但主因是<span style="color: #f59e0b;">雜事過多</span>，擠壓了檢驗時間。
-                        </li>
-                        <li>
-                            <strong style="color: #10b981;">雙指數皆 < 0.8</strong>：
-                            表示該員尚有餘力，可指派更多任務。
-                        </li>
+                <div>
+                    <h3 style="margin-bottom: 20px; color: #1e293b;">工作負載指數 (Workload Index)</h3>
+                    <p style="margin-bottom: 20px;">目標區間：<span style="background: #dcfce7; padding: 2px 8px; border-radius: 4px; color: #166534; font-weight: 600;">0.85 - 1.0</span> (健康負載)</p>
+                    <div class="formula-box" style="text-align: left;">指數 = (檢驗標準工時 + 額外任務) ÷ 480分鐘</div>
+                    <ul class="modern-list" style="margin-top: 30px;">
+                        <li><span class="warning">> 1.2 超載 (Overload)：</span> 過勞風險，需立即分流。</li>
+                        <li><span class="highlight">< 0.7 閒置 (Idle)：</span> 產能浪費，可指派更多任務。</li>
                     </ul>
-                    
-                    <p style="font-size: 14px; color: #64748b; margin-top: 20px; text-align: center;">
-                        <i class="fa-solid fa-lightbulb" style="color: #eab308;"></i> 透過雙指標交叉分析，精準識別「過勞」是來自檢驗還是雜事。
+                </div>
+                <div style="background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 18px; color: #64748b; margin-bottom: 20px; text-transform: uppercase;">人員時間分配範例</h3>
+                    <div style="margin-bottom: 25px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #334155; font-weight: 500;">
+                            <span>檢驗員 A (健康)</span>
+                            <span>100%</span>
+                        </div>
+                        <div style="height: 24px; background: #e2e8f0; border-radius: 12px; overflow: hidden; display: flex;">
+                            <div style="width: 80%; background: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">80% 檢驗</div>
+                            <div style="width: 20%; background: #d97706; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">20% 雜項</div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 25px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #334155; font-weight: 500;">
+                            <span>檢驗員 B (超載)</span>
+                            <span class="warning">120%</span>
+                        </div>
+                        <div style="height: 24px; background: #e2e8f0; border-radius: 12px; overflow: hidden; display: flex;">
+                            <div style="width: 90%; background: #3b82f6;"></div>
+                            <div style="width: 30%; background: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white;">超時</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 20px; background: #fff; padding: 10px; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                        <i class="fa-solid fa-lightbulb" style="color: #eab308;"></i> 系統可協助主管識別誰在做「雜事」，誰在做「本業」。
                     </p>
                 </div>
             </div>
@@ -909,33 +870,33 @@ def get_guide_html():
     </div>
 
     <!-- Slide 8: 行動指南 -->
-    <div class="slide-container">
+    <div class="slide-container" id="slide8">
         <h2 class="slide-title">主管行動指南 <span>ACTION PLAN</span></h2>
         <div class="content-area">
             <div class="tiled-content">
-                <div class="metric-card" style="border-top: 4px solid #3b82f6; text-align: left;">
+                <div class="tile" style="text-align: left; border-top: 4px solid #3b82f6; align-items: flex-start;">
                     <h3 style="color: #1e293b;">1. 看全貌 (Overview)</h3>
-                    <span style="font-size: 11px; background: #eff6ff; color: #3b82f6; padding: 2px 8px; border-radius: 4px; font-weight: 600;">每週</span>
-                    <p style="margin-top: 15px; font-weight: 500; font-size: 16px;">檢查「工作負載儀表板」。</p>
-                    <p style="margin-top: 10px; font-size: 14px; color: #64748b;">• 本週誰過勞？<br>• 下週派工如何調整？</p>
+                    <span style="font-size: 12px; background: #eff6ff; color: #3b82f6; padding: 4px 8px; border-radius: 4px; font-weight: 600;">每週</span>
+                    <p style="margin-top: 15px; font-weight: 500;">檢查「工作負載儀表板」。</p>
+                    <p style="margin-top: 10px; font-size: 15px; color: #64748b;">• 本週誰過勞？<br>• 下週派工如何調整？</p>
                 </div>
-                <div class="metric-card" style="border-top: 4px solid #ef4444; text-align: left;">
+                <div class="tile" style="text-align: left; border-top: 4px solid #f43f5e; align-items: flex-start;">
                     <h3 style="color: #1e293b;">2. 抓異常 (Risk Control)</h3>
-                    <span style="font-size: 11px; background: #fef2f2; color: #ef4444; padding: 2px 8px; border-radius: 4px; font-weight: 600;">每日</span>
-                    <p style="margin-top: 15px; font-weight: 500; font-size: 16px;">查看「異常偵測頁面」。</p>
-                    <p style="margin-top: 10px; font-size: 14px; color: #64748b;">• 確認「極速檢驗」清單。<br>• 抽查監視器或重驗。</p>
+                    <span style="font-size: 12px; background: #fff1f2; color: #f43f5e; padding: 4px 8px; border-radius: 4px; font-weight: 600;">每日</span>
+                    <p style="margin-top: 15px; font-weight: 500;">查看「異常偵測頁面」。</p>
+                    <p style="margin-top: 10px; font-size: 15px; color: #64748b;">• 確認「極速檢驗」清單。<br>• 抽查監視器或重驗。</p>
                 </div>
-                <div class="metric-card" style="border-top: 4px solid #8b5cf6; text-align: left;">
+                <div class="tile" style="text-align: left; border-top: 4px solid #8b5cf6; align-items: flex-start;">
                     <h3 style="color: #1e293b;">3. 評績效 (Evaluation)</h3>
-                    <span style="font-size: 11px; background: #f5f3ff; color: #8b5cf6; padding: 2px 8px; border-radius: 4px; font-weight: 600;">每月</span>
-                    <p style="margin-top: 15px; font-weight: 500; font-size: 16px;">利用「能力雷達」與「矩陣」。</p>
-                    <p style="margin-top: 10px; font-size: 14px; color: #64748b;">• 識別「金牌」予以獎勵。<br>• 對「高風險」進行約談。</p>
+                    <span style="font-size: 12px; background: #f5f3ff; color: #8b5cf6; padding: 4px 8px; border-radius: 4px; font-weight: 600;">每月</span>
+                    <p style="margin-top: 15px; font-weight: 500;">利用「四象限矩陣」。</p>
+                    <p style="margin-top: 10px; font-size: 15px; color: #64748b;">• 識別「金牌」予以獎勵。<br>• 對「高風險」進行約談。</p>
                 </div>
-                <div class="metric-card" style="border-top: 4px solid #f59e0b; text-align: left;">
+                <div class="tile" style="text-align: left; border-top: 4px solid #14b8a6; align-items: flex-start;">
                     <h3 style="color: #1e293b;">4. 優化標準 (Optimize)</h3>
-                    <span style="font-size: 11px; background: #fffbeb; color: #f59e0b; padding: 2px 8px; border-radius: 4px; font-weight: 600;">每季</span>
-                    <p style="margin-top: 15px; font-weight: 500; font-size: 16px;">觀察「標準工時偏差」。</p>
-                    <p style="margin-top: 10px; font-size: 14px; color: #64748b;">• 若某類全員效率皆偏高，<br>應下修該類標準工時。</p>
+                    <span style="font-size: 12px; background: #f0fdfa; color: #14b8a6; padding: 4px 8px; border-radius: 4px; font-weight: 600;">每季</span>
+                    <p style="margin-top: 15px; font-weight: 500;">觀察「標準工時偏差」。</p>
+                    <p style="margin-top: 10px; font-size: 15px; color: #64748b;">• 若某類全員效率皆偏高，<br>應下修該類標準工時。</p>
                 </div>
             </div>
         </div>
@@ -943,19 +904,15 @@ def get_guide_html():
     </div>
 
     <!-- Slide 9: 結語 -->
-    <div class="slide-container">
-        <div class="content-area" style="text-align: center; align-items: center;">
-            
-            <div style="font-size: 60px; color: var(--primary-blue); margin-bottom: 20px;">
+    <div class="slide-container" id="slide9">
+        <div class="content-area" style="align-items: center; text-align: center;">
+            <div style="font-size: 60px; color: #3b82f6; margin-bottom: 20px;">
                 <i class="fa-solid fa-quote-left"></i>
             </div>
-            
-            <h1 style="font-size: 54px; margin-bottom: 30px; color: var(--slate-dark); background: none; -webkit-text-fill-color: initial;">「你無法管理<br>你無法衡量的東西。」</h1>
-            
-            <p style="font-size: 18px; color: #64748b; font-family: Outfit, sans-serif; letter-spacing: 2px; margin-bottom: 50px; font-weight: 600;">&quot;You can&apos;t manage what you don&apos;t measure.&quot;</p>
-            
-            <div style="background: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 800px; border: 1px solid #e2e8f0; margin: 0 auto;">
-                <p style="font-size: 22px; color: #334155; margin: 0; line-height: 1.6;">
+            <h1 style="font-size: 60px; margin-bottom: 30px; color: #0f172a; background: none; -webkit-text-fill-color: initial;">「你無法管理<br>你無法衡量的東西。」</h1>
+            <p style="font-size: 18px; color: #64748b; font-family: 'Outfit', sans-serif; letter-spacing: 2px; margin-bottom: 50px; font-weight: 600;">"You can\\'t manage what you don\\'t measure."</p>
+            <div style="background: #f8fafc; padding: 40px; border-radius: 20px; border: 1px solid #e2e8f0; display: inline-block; max-width: 800px;">
+                <p style="font-size: 24px; color: #334155; margin: 0; line-height: 1.6;">
                     這套系統不是為了監視員工，<br>
                     而是為了 <span class="highlight">識別優秀人才</span>、<span class="warning">保護合規底線</span>，<br>並 <span class="success">優化資源配置</span>。
                 </p>
@@ -963,7 +920,6 @@ def get_guide_html():
         </div>
         <div class="page-number">09</div>
     </div>
-
 </body>
 </html>'''
 
@@ -3715,10 +3671,10 @@ def render_mrb_rate_chart(efficiency_data, processed_data=None):
     st.altair_chart(chart, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看MRB率詳細數據", key="expander_mrb_rate_detail"):
+    with st.expander("查看MRB率詳細數據"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True, key="mrb_rate_detail_df")
+        st.dataframe(detail_df, use_container_width=True, key="dataframe_1")
 
 def render_efficiency_dashboard(efficiency_data, processed_data=None):
     if efficiency_data is None:
@@ -3796,7 +3752,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
     # ==========================================
     with subtab1:
         # 極值剔除設定（改為摺疊面板）
-        with st.expander("🎛️ 效率分析設定", expanded=False, key="expander_efficiency_settings"):
+        with st.expander("🎛️ 效率分析設定", expanded=False):
         
             # 使用兩列佈局使控制項更緊湊
             col1, col2 = st.columns([3, 1])
@@ -3960,7 +3916,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
         st.plotly_chart(fig, use_container_width=True, key="overall_efficiency_chart")
         
         # 顯示效率數據明細
-        with st.expander("檢視效率數據明細", key="expander_efficiency_detail"):
+        with st.expander("檢視效率數據明細"):
             detail_df = overall_efficiency_ranking[['inspector', 'efficiency', 'total_standard_time', 'total_actual_time', 'record_count']].copy()
             
             # 如果有進行極值剔除，添加原始記錄數量和剔除數量
@@ -3992,7 +3948,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
                 subset=['效率']
             )
             
-            st.dataframe(styled_df, use_container_width=True, key="efficiency_detail_styled_df")
+            st.dataframe(styled_df, use_container_width=True, key="dataframe_2")
         
         # ===== 人員物料類別效率分析（獨立區塊）=====
         st.markdown("""
@@ -4189,7 +4145,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
                         highlight_diff, subset=['偏好差異']
                     )
                         
-                    st.dataframe(styled_df, use_container_width=True, hide_index=True, height=min(400, len(final_display) * 40 + 40))
+                    st.dataframe(styled_df, use_container_width=True, hide_index=True, height=min(400, len(final_display) * 40 + 40), key="dataframe_3")
                     
                     # 狀態摘要卡片 - 整合在同一個區塊
                     st.markdown("""
@@ -4583,7 +4539,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
             st.plotly_chart(fig_heatmap, use_container_width=True, key="team_heatmap_in_eff")
             
             # 維度說明（折疊）
-            with st.expander("📖 指標說明", expanded=False, key="expander_metric_desc_in_eff"):
+            with st.expander("📖 指標說明", expanded=False):
                 st.markdown("""
                 | 維度 | 意義 | 計算方式 |
                 |------|------|---------|
@@ -4816,7 +4772,7 @@ def display_category_details(df):
             subset=['效率']
         )
         
-        st.dataframe(styled_df, use_container_width=True, key="category_efficiency_styled_df")
+        st.dataframe(styled_df, use_container_width=True, key="dataframe_4")
     else:
         st.write("數據格式不正確，無法顯示詳細資訊")
 
@@ -5381,10 +5337,10 @@ def show_inspector_mrb_rates(data):
     st.plotly_chart(fig, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看IQC人員MRB率詳細數據", key="expander_iqc_mrb_detail"):
+    with st.expander("查看IQC人員MRB率詳細數據"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True, key="iqc_mrb_rate_detail_df")
+        st.dataframe(detail_df, use_container_width=True, key="dataframe_5")
 
 def show_material_category_mrb_rates(data):
     """
@@ -5463,13 +5419,13 @@ def show_material_category_mrb_rates(data):
     st.plotly_chart(fig, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看物料類別MRB率詳細數據", key="expander_material_mrb_detail"):
+    with st.expander("查看物料類別MRB率詳細數據"):
         detail_df = cat_mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True, key="material_category_mrb_detail_df")
+        st.dataframe(detail_df, use_container_width=True, key="dataframe_6")
 
 
-# ==================== 人員能力分析模組 ======================================
+# ==================== 人員能力分析模組 ====================
 def render_capability_analysis_dashboard(processed_data, efficiency_data, workload_data, time_allocation_data, additional_tasks_data):
     """
     人員能力分析儀表板 - 整合工作負載和時間分配，提供五維雷達圖和熱力圖矩陣
@@ -5729,7 +5685,7 @@ def render_team_capability_matrix(capability_data):
     )
     
     # 維度說明
-    with st.expander("📖 指標說明（含計算細節）", expanded=False, key="expander_metric_calc_detail"):
+    with st.expander("📖 指標說明（含計算細節）", expanded=False):
         st.markdown("""
         | 維度 | 計算公式 | 意義 | 範例說明 |
         |------|---------|------|----------|
@@ -5887,7 +5843,7 @@ def render_individual_radar_chart(capability_data, processed_data):
                 """, unsafe_allow_html=True)
         
         # 指標計算說明
-        with st.expander("📖 指標計算說明", expanded=False, key="expander_radar_calc_detail"):
+        with st.expander("📖 指標計算說明", expanded=False):
             st.markdown(f"""
             ### 🧮 {selected_inspector} 的指標計算細節
             
@@ -5946,7 +5902,7 @@ def render_capability_trend(processed_data, workload_data):
     st.markdown("追蹤檢驗員的效率變化趨勢")
     
     # 指標計算說明
-    with st.expander("📖 趨勢圖指標說明", expanded=False, key="expander_trend_metric_desc"):
+    with st.expander("📖 趨勢圖指標說明", expanded=False):
         st.markdown("""
         ### 📊 週效率趨勢
         
@@ -6462,7 +6418,7 @@ def render_workload_dashboard(workload_data):
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # 顯示詳細數據
-                with st.expander("查看物料類別檢驗次數詳細數據", key="expander_material_inspect_count"):
+                with st.expander("查看物料類別檢驗次數詳細數據"):
                     # 按檢驗員和物料大類別透視
                     pivot_data = stacked_df.pivot_table(
                         values='平均檢驗次數',
@@ -6482,7 +6438,7 @@ def render_workload_dashboard(workload_data):
                     # 按總次數排序
                     pivot_data = pivot_data.sort_values('總平均檢驗次數', ascending=False)
                     
-                    st.dataframe(pivot_data, use_container_width=True, key="material_category_pivot_df")
+                    st.dataframe(pivot_data, use_container_width=True, key="dataframe_7")
             else:
                 st.info("沒有足夠的數據來顯示物料類別分析")
         else:
@@ -6511,7 +6467,7 @@ def render_workload_dashboard(workload_data):
     # 顯示工作負載詳細資料
     st.subheader("工作負載詳細資料📃")
     
-    with st.expander("查看工作負載詳細資料", key="expander_workload_detail"):
+    with st.expander("查看工作負載詳細資料"):
         # 處理數據用於顯示
         display_df = workload_data.copy()
         display_df['inspection_standard_time'] = display_df['inspection_standard_time'].round(2)  # 修改欄位名稱
@@ -6537,12 +6493,12 @@ def render_workload_dashboard(workload_data):
         
         display_df = display_df.rename(columns=rename_dict)
         
-        st.dataframe(display_df, use_container_width=True, key="workload_display_df")
+        st.dataframe(display_df, use_container_width=True, key="dataframe_8")
     
     # 新增: 顯示檢驗負載詳細資料
     st.subheader("檢驗負載詳細資料📊")
     
-    with st.expander("查看檢驗負載詳細資料", key="expander_inspection_load_detail"):
+    with st.expander("查看檢驗負載詳細資料"):
         # 計算每個檢驗員的詳細檢驗負載數據
         inspection_load_details = workload_data.groupby('inspector').agg(
             day_count=('date', 'nunique'),
@@ -6584,7 +6540,7 @@ def render_workload_dashboard(workload_data):
         inspection_load_details = inspection_load_details.sort_values('檢驗負載指數', ascending=False)
         
         # 顯示數據表格
-        st.dataframe(inspection_load_details, use_container_width=True, key="inspection_load_details_df")
+        st.dataframe(inspection_load_details, use_container_width=True, key="dataframe_9")
         
         # 添加計算邏輯說明
         st.markdown("""
@@ -6888,11 +6844,11 @@ def render_time_allocation_dashboard(time_allocation_data):
                 st.plotly_chart(fig_detail, use_container_width=True)
                 
                 # 顯示額外任務詳細數據
-                with st.expander(f"{selected_inspector} 額外任務詳細數據", key="expander_additional_task_detail"):
+                with st.expander(f"{selected_inspector} 額外任務詳細數據"):
                     detail_df = task_df.copy()
                     detail_df['ratio'] = (detail_df['ratio'] * 100).round(1).astype(str) + '%'
                     detail_df.columns = ['任務類型', '佔總時間比例']
-                    st.dataframe(detail_df, use_container_width=True, key="additional_task_detail_df")
+                    st.dataframe(detail_df, use_container_width=True, key="dataframe_10")
             else:
                 st.write("沒有額外任務記錄")
         else:
@@ -6910,7 +6866,7 @@ def render_time_allocation_dashboard(time_allocation_data):
     st.subheader("所有檢驗員時間分配概覽👥 ")
     
     # 使用expander且默認為collapsed (expanded=False)
-    with st.expander("點擊展開查看所有檢驗員時間分配概覽", expanded=False, key="expander_time_allocation_overview"):
+    with st.expander("點擊展開查看所有檢驗員時間分配概覽", expanded=False):
         overview_data = []
         for _, row in time_allocation_data.iterrows():
             overview_data.append({
@@ -6930,7 +6886,7 @@ def render_time_allocation_dashboard(time_allocation_data):
         overview_df = overview_df.sort_values('排序值', ascending=False)
         overview_df = overview_df.drop(columns=['排序值'])
         
-        st.dataframe(overview_df, use_container_width=True, key="time_allocation_overview_df")
+        st.dataframe(overview_df, use_container_width=True, key="dataframe_11")
 
 # 2. 工作負載監控儀表板 - 管理者視角整合版
 def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_data, workload_data, efficiency_data):
@@ -6941,7 +6897,7 @@ def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_d
     st.header("⏱️ 工作負載監控")
     
     # ===== 指標說明區 =====
-    with st.expander("📖 指標說明（點擊展開）", expanded=False, key="expander_workload_metric_desc"):
+    with st.expander("📖 指標說明（點擊展開）", expanded=False):
         st.markdown("""
         ### 📊 概覽指標說明
         
@@ -7321,7 +7277,7 @@ def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_d
             st.markdown(s)
     
     # ===== 詳細數據表格（折疊） =====
-    with st.expander("📊 詳細數據表格", expanded=False, key="expander_detail_data_table"):
+    with st.expander("📊 詳細數據表格", expanded=False):
         # 準備顯示用的數據表
         detail_df = inspector_stats[['檢驗員', '檢驗批數', '檢驗時間(hr)', '額外任務(hr)', '總工時(hr)', '效率']].copy()
         detail_df = detail_df.sort_values('總工時(hr)', ascending=False)
@@ -7543,10 +7499,10 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # 顯示詳細數據
-                with st.expander(f"檢視 {selected_inspector} 額外任務詳細數據", key="expander_view_additional_task_detail"):
+                with st.expander(f"檢視 {selected_inspector} 額外任務詳細數據"):
                     detail_df = inspector_data[['task_type', 'total_time', 'task_days', '每次平均時間(分鐘)']].copy()
                     detail_df.columns = ['任務類型', '總時間(分鐘)', '任務發生天數', '每次平均時間(分鐘)']
-                    st.dataframe(detail_df, use_container_width=True, key="inspector_additional_task_detail_df")
+                    st.dataframe(detail_df, use_container_width=True, key="dataframe_12")
             else:
                 st.info(f"{selected_inspector} 沒有額外任務記錄")
         else:
@@ -7596,8 +7552,8 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
         st.plotly_chart(fig_inspector_avg, use_container_width=True)
         
         # 顯示詳細數據表格
-        with st.expander("查看所有檢驗員額外任務時間詳細數據", key="expander_all_additional_task_detail"):
-            st.dataframe(inspector_summary, use_container_width=True, key="all_inspector_additional_task_df")
+        with st.expander("查看所有檢驗員額外任務時間詳細數據"):
+            st.dataframe(inspector_summary, use_container_width=True, key="dataframe_13")
             
     except Exception as e:
         st.error(f"計算每次平均時間時發生錯誤: {str(e)}")
@@ -7613,7 +7569,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
         inspector_summary = inspector_summary.sort_values('總時間(分鐘)', ascending=False)
         
         # 顯示簡單統計
-        st.dataframe(inspector_summary, use_container_width=True, key="inspector_summary_fallback_df")
+        st.dataframe(inspector_summary, use_container_width=True, key="dataframe_14")
 
 # 顯示處理狀態
 def render_status():
@@ -7682,7 +7638,7 @@ def render_calculation_details():
             # 確保所有列都存在
             existing_columns = [col for col in key_columns if col in df_filtered.columns]
             
-            st.dataframe(df_filtered[existing_columns])
+            st.dataframe(df_filtered[existing_columns], key="dataframe_15")
             
             st.metric("總筆數", len(df_filtered))
             
@@ -7708,15 +7664,15 @@ def render_calculation_details():
                 # 確保所有列都存在
                 existing_pcb_columns = [col for col in pcb_columns if col in qb_data.columns]
                 
-                st.dataframe(qb_data[existing_pcb_columns])
+                st.dataframe(qb_data[existing_pcb_columns], key="dataframe_16")
                 
                 if st.session_state.pcb_spec_data is not None and not st.session_state.pcb_spec_data.empty:
                     st.subheader("PCB建檔明細")
-                    st.dataframe(st.session_state.pcb_spec_data.head(20))
+                    st.dataframe(st.session_state.pcb_spec_data.head(20), key="dataframe_17")
                 
                 if st.session_state.pcb_standard_time_data is not None and not st.session_state.pcb_standard_time_data.empty:
                     st.subheader("PCB標準工時對應表")
-                    st.dataframe(st.session_state.pcb_standard_time_data)
+                    st.dataframe(st.session_state.pcb_standard_time_data, key="dataframe_18")
             else:
                 st.info("沒有發現QB類型料號")
         else:
@@ -7740,7 +7696,7 @@ def render_calculation_details():
                         'total_actual_time': '實際耗時總和(分鐘)',
                         'record_count': '記錄筆數'
                     })
-                    st.dataframe(overall_eff)
+                    st.dataframe(overall_eff, key="dataframe_19")
             
             # 類別效率數據
             st.subheader("各物料類別效率")
@@ -7763,7 +7719,7 @@ def render_calculation_details():
                                 'total_standard_time': '標準工時總和(分鐘)',
                                 'total_actual_time': '實際耗時總和(分鐘)'
                             })
-                            st.dataframe(cat_df)
+                            st.dataframe(cat_df, key="dataframe_20")
                 else:
                     st.info("沒有可用的類別效率數據")
         else:
@@ -7796,7 +7752,7 @@ def render_calculation_details():
             if selected_inspector != "全部":
                 filtered_workload = workload_df[workload_df["檢驗員"] == selected_inspector]
             
-            st.dataframe(filtered_workload)
+            st.dataframe(filtered_workload, key="dataframe_21")
             
             # 計算並顯示統計資訊
             if not filtered_workload.empty:
@@ -7839,7 +7795,7 @@ def render_calculation_details():
                     'task_detail_ratios': '任務細項比例(字典)'
                 })
                 
-                st.dataframe(renamed_df)
+                st.dataframe(renamed_df, key="dataframe_22")
                 
                 # 展開任務細項數據
                 st.subheader("展開後的任務細項數據")
@@ -7884,7 +7840,7 @@ def render_calculation_details():
                 
                 # 只選擇存在的列
                 valid_display_columns = [col for col in display_columns if col in expanded_df.columns]
-                st.dataframe(expanded_df[valid_display_columns])
+                st.dataframe(expanded_df[valid_display_columns], key="dataframe_23")
             else:
                 # 如果沒有任務細項，直接顯示基本時間分配
                 renamed_df = time_allocation_df.rename(columns={
@@ -7896,7 +7852,7 @@ def render_calculation_details():
                     'additional_task_ratio': '額外任務時間比例'
                 })
                 
-                st.dataframe(renamed_df)
+                st.dataframe(renamed_df, key="dataframe_24")
         else:
             st.info("沒有可用的時間分配數據")
     
@@ -7922,14 +7878,14 @@ def render_calculation_details():
             if selected_inspector != "全部":
                 filtered_tasks = tasks_df[tasks_df["檢驗員"] == selected_inspector]
             
-            st.dataframe(filtered_tasks)
+            st.dataframe(filtered_tasks, key="dataframe_25")
             
             # 按任務類型分組統計
             task_summary = tasks_df.groupby('任務類型')['總時間(分鐘)'].sum().reset_index()
             task_summary = task_summary.sort_values('總時間(分鐘)', ascending=False)
             
             st.subheader("任務類型統計")
-            st.dataframe(task_summary)
+            st.dataframe(task_summary, key="dataframe_26")
             
             # 任務分布圖
             st.subheader("任務時間分布")
@@ -7946,7 +7902,7 @@ def render_calculation_details():
             inspector_summary = inspector_summary.sort_values('總時間(分鐘)', ascending=False)
             
             st.subheader("檢驗員額外任務時間統計")
-            st.dataframe(inspector_summary)
+            st.dataframe(inspector_summary, key="dataframe_27")
         else:
             st.info("沒有可用的額外任務數據")
 
@@ -7994,7 +7950,7 @@ def render_calculation_details():
         
         # 應用樣式並顯示
         styled_df = display_df.style.apply(highlight_high_mrb_rate)
-        st.dataframe(styled_df, use_container_width=True, key="mrb_analysis_styled_df")
+        st.dataframe(styled_df, use_container_width=True, key="dataframe_28")
         
         # 按物料類別分析MRB率
         st.subheader("按物料類別分析MRB率")
@@ -8022,7 +7978,7 @@ def render_calculation_details():
             # 格式化MRB率為百分比
             cat_df['MRB率'] = cat_df['MRB率'].apply(lambda x: f"{x:.2%}")
             
-            st.dataframe(cat_df, use_container_width=True, key="category_mrb_rate_df")
+            st.dataframe(cat_df, use_container_width=True, key="dataframe_29")
             
             # 創建物料類別MRB率條形圖
             cat_df_for_chart = pd.DataFrame(category_stats)
@@ -8317,7 +8273,7 @@ def debug_mrb_status():
         
         if not non_empty_m.empty:
             st.write("M欄位非空值示例:")
-            st.dataframe(non_empty_m[['料號', 'M', '是否為MRB']].head(10))
+            st.dataframe(non_empty_m[['料號', 'M', '是否為MRB']].head(10), key="dataframe_30")
     
     # 檢查MRB狀態
     if '是否為MRB' in df.columns:
@@ -8327,7 +8283,7 @@ def debug_mrb_status():
         
         if mrb_count > 0:
             st.write("MRB記錄示例:")
-            st.dataframe(df[df['是否為MRB'] == True][['料號', 'M', '是否為MRB', '處理後檢驗標準工時']].head(10))
+            st.dataframe(df[df['是否為MRB'] == True][['料號', 'M', '是否為MRB', '處理後檢驗標準工時']].head(10), key="dataframe_31")
     
     # 重新檢查每一行，確認MRB判斷邏輯
     st.write("### 重新檢查MRB邏輯")
@@ -8355,7 +8311,7 @@ def debug_mrb_status():
     inconsistent = results_df[results_df['是否一致'] == False]
     if not inconsistent.empty:
         st.write(f"發現 {len(inconsistent)} 個MRB狀態不一致的記錄:")
-        st.dataframe(inconsistent)
+        st.dataframe(inconsistent, key="dataframe_32")
     else:
         st.write("所有抽樣記錄的MRB狀態一致")
     
@@ -9131,7 +9087,7 @@ def process_files_button_click(uploaded_files, start_date, end_date):
                   f"PCB標準工時對應表({len(pcb_standard_time_files)}), IQC額外任務紀錄清單({len(additional_tasks_files)})", level="INFO")
         
         # 顯示分類結果
-        with st.expander("檔案分類結果", expanded=False, key="expander_file_classification"):
+        with st.expander("檔案分類結果", expanded=False):
             st.write("IQC Report: " + ", ".join([f.name for f in iqc_report_files]))
             st.write("PCB建檔明細: " + ", ".join([f.name for f in pcb_specs_files]))
             st.write("PCB標準工時對應表: " + ", ".join([f.name for f in pcb_standard_time_files]))
@@ -9315,7 +9271,7 @@ def render_settings_panel():
                 st.write("### QB料號與標準工時詳細清單")
                 display_df = qb_df[['料號', '處理後檢驗標準工時', '是否為MRB']].copy()
                 display_df.columns = ['料號', '標準工時(分鐘)', 'MRB狀態']
-                st.dataframe(display_df.sort_values('標準工時(分鐘)'), use_container_width=True, key="qb_standard_time_detail_df")
+                st.dataframe(display_df.sort_values('標準工時(分鐘)'), use_container_width=True, key="dataframe_33")
             else:
                 st.write("未發現QB類型料號")
         else:
@@ -9990,7 +9946,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                     col_table, col_chart = st.columns([1, 1])
                     
                     with col_table:
-                        st.dataframe(category_anomaly_stats, use_container_width=True, key="flash_category_anomaly_stats_df")
+                        st.dataframe(category_anomaly_stats, use_container_width=True, key="dataframe_34")
                     
                     with col_chart:
                         # 橫向堆疊條形圖
@@ -10031,7 +9987,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         st.plotly_chart(fig_person_flash, use_container_width=True)
                     
                     # 該人員異常紀錄明細
-                    with st.expander(f"📋 {selected_inspector_flash} 極速檢驗明細記錄", expanded=False, key="expander_person_flash_detail"):
+                    with st.expander(f"📋 {selected_inspector_flash} 極速檢驗明細記錄", expanded=False):
                         person_display_cols = ['類別', '大類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值', '異常等級']
                         available_person_cols = [col for col in person_display_cols if col in person_flash_data.columns]
                         
@@ -10046,11 +10002,11 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         if '檢驗耗時' in person_show_df.columns:
                             person_show_df['檢驗耗時'] = person_show_df['檢驗耗時'].round(1)
                         
-                        st.dataframe(person_show_df, use_container_width=True, key="person_flash_detail_df")
+                        st.dataframe(person_show_df, use_container_width=True, key="dataframe_35")
             
             # 詳細異常紀錄
             st.markdown("---")
-            with st.expander("📋 檢視極速檢驗異常明細（全員）", expanded=False, key="expander_flash_anomaly_all"):
+            with st.expander("📋 檢視極速檢驗異常明細（全員）", expanded=False):
                 # 準備顯示欄位
                 display_cols = ['處理後檢驗員', '類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值', '異常等級']
                 available_cols = [col for col in display_cols if col in flash_anomalies.columns]
@@ -10070,7 +10026,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 # 重新命名欄位
                 show_df.columns = ['檢驗員', '類別', '料號', '日期', '標準工時(分)', '實際耗時(分)', '效率', '異常等級']
                 
-                st.dataframe(show_df, use_container_width=True, key="flash_anomaly_all_detail_df")
+                st.dataframe(show_df, use_container_width=True, key="dataframe_36")
         else:
             st.success(f"✅ 太棒了！目前沒有發現效率超過 {suspicious_threshold} 倍的極速檢驗紀錄。")
     
@@ -10233,7 +10189,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                     col_table_t, col_chart_t = st.columns([1, 1])
                     
                     with col_table_t:
-                        st.dataframe(category_turtle_stats, use_container_width=True, key="turtle_category_stats_df")
+                        st.dataframe(category_turtle_stats, use_container_width=True, key="dataframe_37")
                     
                     with col_chart_t:
                         # 橫向條形圖
@@ -10259,7 +10215,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         st.plotly_chart(fig_person_turtle, use_container_width=True)
                     
                     # 該人員無效工時明細記錄
-                    with st.expander(f"📋 {selected_inspector_turtle} 無效工時明細記錄", expanded=False, key="expander_person_turtle_detail"):
+                    with st.expander(f"📋 {selected_inspector_turtle} 無效工時明細記錄", expanded=False):
                         person_display_cols_t = ['類別', '大類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值']
                         available_person_cols_t = [col for col in person_display_cols_t if col in person_turtle_data.columns]
                         
@@ -10274,11 +10230,11 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         if '檢驗耗時' in person_show_df_t.columns:
                             person_show_df_t['檢驗耗時'] = person_show_df_t['檢驗耗時'].round(1)
                         
-                        st.dataframe(person_show_df_t, use_container_width=True, key="person_turtle_detail_df")
+                        st.dataframe(person_show_df_t, use_container_width=True, key="dataframe_38")
             
             # 詳細紀錄
             st.markdown("---")
-            with st.expander("📋 檢視無效工時明細（全員）", expanded=False, key="expander_turtle_anomaly_all"):
+            with st.expander("📋 檢視無效工時明細（全員）", expanded=False):
                 display_cols2 = ['處理後檢驗員', '類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值']
                 available_cols2 = [col for col in display_cols2 if col in turtle_anomalies.columns]
                 
@@ -10291,7 +10247,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 
                 show_df2.columns = ['檢驗員', '類別', '料號', '日期', '標準工時(分)', '實際耗時(分)', '效率']
                 
-                st.dataframe(show_df2, use_container_width=True, key="turtle_anomaly_all_detail_df")
+                st.dataframe(show_df2, use_container_width=True, key="dataframe_39")
         else:
             st.success(f"✅ 太棒了！目前沒有發現效率低於 {low_efficiency_threshold} 且無 MRB 的無效工時紀錄。")
     
@@ -10440,7 +10396,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
             if recommendations:
                 rec_df = pd.DataFrame(recommendations)
                 rec_df['中位數效率'] = rec_df['中位數效率'].round(2)
-                st.dataframe(rec_df, use_container_width=True)
+                st.dataframe(rec_df, use_container_width=True, key="dataframe_40")
             else:
                 st.success("✅ 目前各類別的標準工時設定看來相對合理（中位數介於 0.7 ~ 1.3 之間）。")
             
@@ -10475,7 +10431,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
             detail_df['大類別'] = detail_df['類別'].apply(get_main_cat_detail)
             
             # === 物料大類別明細 ===
-            with st.expander("📊 物料大類別效率明細", expanded=True, key="expander_main_category_efficiency"):
+            with st.expander("📊 物料大類別效率明細", expanded=True):
                 main_cat_detail = detail_df.groupby('大類別').agg(
                     樣本數=('效率比值', 'count'),
                     平均效率=('效率比值', 'mean'),
@@ -10534,10 +10490,10 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 # 排序
                 main_cat_detail = main_cat_detail.sort_values('樣本數', ascending=False)
                 
-                st.dataframe(main_cat_detail, use_container_width=True, hide_index=True)
+                st.dataframe(main_cat_detail, use_container_width=True, hide_index=True, key="dataframe_41")
             
             # === 物料小類別明細 ===
-            with st.expander("📋 物料小類別效率明細", expanded=False, key="expander_sub_category_efficiency"):
+            with st.expander("📋 物料小類別效率明細", expanded=False):
                 # 選擇大類別篩選
                 available_main_cats = sorted(detail_df['大類別'].unique())
                 selected_main_cat = st.selectbox(
@@ -10599,7 +10555,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                     '平均單批標準工時(分)', '建議調整成(分)', '判定'
                 ]]
                 
-                st.dataframe(sub_cat_detail, use_container_width=True, hide_index=True)
+                st.dataframe(sub_cat_detail, use_container_width=True, hide_index=True, key="dataframe_42")
                 
                 # 統計摘要
                 st.write(f"**統計摘要：** 共 {len(sub_cat_detail)} 個小類別")
@@ -10999,7 +10955,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
             st.plotly_chart(fig_cat, use_container_width=True)
         
         # MRB 率明細表格（取代檢驗明細）
-        with st.expander(f"📊 {selected_person} 各類別MRB率明細", expanded=False, key="expander_person_mrb_rate_detail"):
+        with st.expander(f"📊 {selected_person} 各類別MRB率明細", expanded=False):
             # 整理顯示資料
             mrb_detail_df = cat_stats[[
                 '大類別', '批數', 'MRB數', 'MRB率', '加權效率', '總標準工時', '總實際耗時'
@@ -11008,7 +10964,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
             mrb_detail_df = mrb_detail_df.sort_values('MRB率(%)', ascending=False)
             
             # 顯示表格
-            st.dataframe(mrb_detail_df, use_container_width=True, hide_index=True)
+            st.dataframe(mrb_detail_df, use_container_width=True, hide_index=True, key="dataframe_43")
             
             # 顯示總計
             st.markdown(f"""
@@ -11035,7 +10991,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
         
         if not gold_df.empty:
             st.markdown("**特徵：** 高效率 + 高品質把關，是團隊標竿")
-            st.dataframe(gold_df, use_container_width=True, hide_index=True)
+            st.dataframe(gold_df, use_container_width=True, hide_index=True, key="dataframe_44")
         else:
             st.info("目前沒有人員在此象限")
     
@@ -11046,7 +11002,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
         
         if not risk_df.empty:
             st.markdown("**💡 解讀：** 高效率+低MRB率可能是「老手高手」（經驗豐富、快速判斷），也可能是「需要抽查確認」，關鍵在於有沒有對應的品質問題回饋。")
-            st.dataframe(risk_df, use_container_width=True, hide_index=True)
+            st.dataframe(risk_df, use_container_width=True, hide_index=True, key="dataframe_45")
         else:
             st.info("✅ 目前沒有人員在此象限")
     
@@ -11057,7 +11013,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
         
         if not hard_df.empty:
             st.markdown("**特徵：** 品質把關嚴謹但效率較低，可能遇到難驗物料或需要效率輔導")
-            st.dataframe(hard_df, use_container_width=True, hide_index=True)
+            st.dataframe(hard_df, use_container_width=True, hide_index=True, key="dataframe_46")
         else:
             st.info("目前沒有人員在此象限")
     
@@ -11068,7 +11024,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
         
         if not need_df.empty:
             st.markdown("**建議：** 這些人員效率和品質都有提升空間，建議安排培訓或師傅帶領")
-            st.dataframe(need_df, use_container_width=True, hide_index=True)
+            st.dataframe(need_df, use_container_width=True, hide_index=True, key="dataframe_47")
         else:
             st.info("目前沒有人員在此象限")
 

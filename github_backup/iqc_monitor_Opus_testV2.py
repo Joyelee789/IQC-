@@ -3718,7 +3718,7 @@ def render_mrb_rate_chart(efficiency_data, processed_data=None):
     with st.expander("查看MRB率詳細數據"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True)
+        st.dataframe(detail_df, use_container_width=True, key="mrb_rate_detail_df")
 
 def render_efficiency_dashboard(efficiency_data, processed_data=None):
     if efficiency_data is None:
@@ -3992,7 +3992,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
                 subset=['效率']
             )
             
-            st.dataframe(styled_df, use_container_width=True)
+            st.dataframe(styled_df, use_container_width=True, key="efficiency_detail_styled_df")
         
         # ===== 人員物料類別效率分析（獨立區塊）=====
         st.markdown("""
@@ -4816,7 +4816,7 @@ def display_category_details(df):
             subset=['效率']
         )
         
-        st.dataframe(styled_df, use_container_width=True)
+        st.dataframe(styled_df, use_container_width=True, key="category_efficiency_styled_df")
     else:
         st.write("數據格式不正確，無法顯示詳細資訊")
 
@@ -5384,7 +5384,7 @@ def show_inspector_mrb_rates(data):
     with st.expander("查看IQC人員MRB率詳細數據"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True)
+        st.dataframe(detail_df, use_container_width=True, key="iqc_mrb_rate_detail_df")
 
 def show_material_category_mrb_rates(data):
     """
@@ -5466,10 +5466,10 @@ def show_material_category_mrb_rates(data):
     with st.expander("查看物料類別MRB率詳細數據"):
         detail_df = cat_mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
-        st.dataframe(detail_df, use_container_width=True)
+        st.dataframe(detail_df, use_container_width=True, key="material_category_mrb_detail_df")
 
 
-# ==================== 人員能力分析模組 ====================
+# ==================== 人員能力分析模組 ======================================
 def render_capability_analysis_dashboard(processed_data, efficiency_data, workload_data, time_allocation_data, additional_tasks_data):
     """
     人員能力分析儀表板 - 整合工作負載和時間分配，提供五維雷達圖和熱力圖矩陣
@@ -6482,7 +6482,7 @@ def render_workload_dashboard(workload_data):
                     # 按總次數排序
                     pivot_data = pivot_data.sort_values('總平均檢驗次數', ascending=False)
                     
-                    st.dataframe(pivot_data, use_container_width=True)
+                    st.dataframe(pivot_data, use_container_width=True, key="material_category_pivot_df")
             else:
                 st.info("沒有足夠的數據來顯示物料類別分析")
         else:
@@ -6537,7 +6537,7 @@ def render_workload_dashboard(workload_data):
         
         display_df = display_df.rename(columns=rename_dict)
         
-        st.dataframe(display_df, use_container_width=True)
+        st.dataframe(display_df, use_container_width=True, key="workload_display_df")
     
     # 新增: 顯示檢驗負載詳細資料
     st.subheader("檢驗負載詳細資料📊")
@@ -6584,7 +6584,7 @@ def render_workload_dashboard(workload_data):
         inspection_load_details = inspection_load_details.sort_values('檢驗負載指數', ascending=False)
         
         # 顯示數據表格
-        st.dataframe(inspection_load_details, use_container_width=True)
+        st.dataframe(inspection_load_details, use_container_width=True, key="inspection_load_details_df")
         
         # 添加計算邏輯說明
         st.markdown("""
@@ -6892,7 +6892,7 @@ def render_time_allocation_dashboard(time_allocation_data):
                     detail_df = task_df.copy()
                     detail_df['ratio'] = (detail_df['ratio'] * 100).round(1).astype(str) + '%'
                     detail_df.columns = ['任務類型', '佔總時間比例']
-                    st.dataframe(detail_df, use_container_width=True)
+                    st.dataframe(detail_df, use_container_width=True, key="additional_task_detail_df")
             else:
                 st.write("沒有額外任務記錄")
         else:
@@ -6930,7 +6930,7 @@ def render_time_allocation_dashboard(time_allocation_data):
         overview_df = overview_df.sort_values('排序值', ascending=False)
         overview_df = overview_df.drop(columns=['排序值'])
         
-        st.dataframe(overview_df, use_container_width=True)
+        st.dataframe(overview_df, use_container_width=True, key="time_allocation_overview_df")
 
 # 2. 工作負載監控儀表板 - 管理者視角整合版
 def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_data, workload_data, efficiency_data):
@@ -7546,7 +7546,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
                 with st.expander(f"檢視 {selected_inspector} 額外任務詳細數據"):
                     detail_df = inspector_data[['task_type', 'total_time', 'task_days', '每次平均時間(分鐘)']].copy()
                     detail_df.columns = ['任務類型', '總時間(分鐘)', '任務發生天數', '每次平均時間(分鐘)']
-                    st.dataframe(detail_df, use_container_width=True)
+                    st.dataframe(detail_df, use_container_width=True, key="inspector_additional_task_detail_df")
             else:
                 st.info(f"{selected_inspector} 沒有額外任務記錄")
         else:
@@ -7597,7 +7597,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
         
         # 顯示詳細數據表格
         with st.expander("查看所有檢驗員額外任務時間詳細數據"):
-            st.dataframe(inspector_summary, use_container_width=True)
+            st.dataframe(inspector_summary, use_container_width=True, key="all_inspector_additional_task_df")
             
     except Exception as e:
         st.error(f"計算每次平均時間時發生錯誤: {str(e)}")
@@ -7613,7 +7613,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
         inspector_summary = inspector_summary.sort_values('總時間(分鐘)', ascending=False)
         
         # 顯示簡單統計
-        st.dataframe(inspector_summary, use_container_width=True)
+        st.dataframe(inspector_summary, use_container_width=True, key="inspector_summary_fallback_df")
 
 # 顯示處理狀態
 def render_status():
@@ -7994,7 +7994,7 @@ def render_calculation_details():
         
         # 應用樣式並顯示
         styled_df = display_df.style.apply(highlight_high_mrb_rate)
-        st.dataframe(styled_df, use_container_width=True)
+        st.dataframe(styled_df, use_container_width=True, key="mrb_analysis_styled_df")
         
         # 按物料類別分析MRB率
         st.subheader("按物料類別分析MRB率")
@@ -8022,7 +8022,7 @@ def render_calculation_details():
             # 格式化MRB率為百分比
             cat_df['MRB率'] = cat_df['MRB率'].apply(lambda x: f"{x:.2%}")
             
-            st.dataframe(cat_df, use_container_width=True)
+            st.dataframe(cat_df, use_container_width=True, key="category_mrb_rate_df")
             
             # 創建物料類別MRB率條形圖
             cat_df_for_chart = pd.DataFrame(category_stats)
@@ -9315,7 +9315,7 @@ def render_settings_panel():
                 st.write("### QB料號與標準工時詳細清單")
                 display_df = qb_df[['料號', '處理後檢驗標準工時', '是否為MRB']].copy()
                 display_df.columns = ['料號', '標準工時(分鐘)', 'MRB狀態']
-                st.dataframe(display_df.sort_values('標準工時(分鐘)'), use_container_width=True)
+                st.dataframe(display_df.sort_values('標準工時(分鐘)'), use_container_width=True, key="qb_standard_time_detail_df")
             else:
                 st.write("未發現QB類型料號")
         else:
@@ -9990,7 +9990,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                     col_table, col_chart = st.columns([1, 1])
                     
                     with col_table:
-                        st.dataframe(category_anomaly_stats, use_container_width=True)
+                        st.dataframe(category_anomaly_stats, use_container_width=True, key="flash_category_anomaly_stats_df")
                     
                     with col_chart:
                         # 橫向堆疊條形圖
@@ -10046,7 +10046,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         if '檢驗耗時' in person_show_df.columns:
                             person_show_df['檢驗耗時'] = person_show_df['檢驗耗時'].round(1)
                         
-                        st.dataframe(person_show_df, use_container_width=True)
+                        st.dataframe(person_show_df, use_container_width=True, key="person_flash_detail_df")
             
             # 詳細異常紀錄
             st.markdown("---")
@@ -10070,7 +10070,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 # 重新命名欄位
                 show_df.columns = ['檢驗員', '類別', '料號', '日期', '標準工時(分)', '實際耗時(分)', '效率', '異常等級']
                 
-                st.dataframe(show_df, use_container_width=True)
+                st.dataframe(show_df, use_container_width=True, key="flash_anomaly_all_detail_df")
         else:
             st.success(f"✅ 太棒了！目前沒有發現效率超過 {suspicious_threshold} 倍的極速檢驗紀錄。")
     
@@ -10233,7 +10233,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                     col_table_t, col_chart_t = st.columns([1, 1])
                     
                     with col_table_t:
-                        st.dataframe(category_turtle_stats, use_container_width=True)
+                        st.dataframe(category_turtle_stats, use_container_width=True, key="turtle_category_stats_df")
                     
                     with col_chart_t:
                         # 橫向條形圖
@@ -10274,7 +10274,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         if '檢驗耗時' in person_show_df_t.columns:
                             person_show_df_t['檢驗耗時'] = person_show_df_t['檢驗耗時'].round(1)
                         
-                        st.dataframe(person_show_df_t, use_container_width=True)
+                        st.dataframe(person_show_df_t, use_container_width=True, key="person_turtle_detail_df")
             
             # 詳細紀錄
             st.markdown("---")
@@ -10291,7 +10291,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 
                 show_df2.columns = ['檢驗員', '類別', '料號', '日期', '標準工時(分)', '實際耗時(分)', '效率']
                 
-                st.dataframe(show_df2, use_container_width=True)
+                st.dataframe(show_df2, use_container_width=True, key="turtle_anomaly_all_detail_df")
         else:
             st.success(f"✅ 太棒了！目前沒有發現效率低於 {low_efficiency_threshold} 且無 MRB 的無效工時紀錄。")
     

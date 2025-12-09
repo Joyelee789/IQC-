@@ -39,7 +39,7 @@ def main():
         base_path = os.path.dirname(os.path.abspath(__file__))
         print(f"🔧 執行模式: 開發模式")
     
-    app_path = os.path.join(base_path, 'iqc_monitor_V22.py')
+    app_path = os.path.join(base_path, 'iqc_monitor_Opus_testV3.py')
     
     # 檢查主程式是否存在
     if not os.path.exists(app_path):

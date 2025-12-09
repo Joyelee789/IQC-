@@ -39,6 +39,20 @@ for package in required_packages:
 # 添加現代無襯線字體設定
 st.markdown("""
 <style>
+    /* ===== 修復 Streamlit 1.52+ widget key 顯示 bug ===== */
+    /* 隱藏錯誤顯示的 key 標籤 */
+    [data-testid="stMarkdownContainer"] > p:first-child {
+        display: none !important;
+    }
+    [data-testid="stMarkdownContainer"] > p:only-child {
+        display: block !important;
+    }
+    
+    /* 隱藏包含 "key" 開頭的錯誤文字 */
+    p:empty, div:empty {
+        display: none !important;
+    }
+    
     /* IQC 效率管理系統設計更新 - 淺灰色設計方案 */
 
     /* ===== 1. 顏色變量定義 - 淺灰色配色方案 ===== */
@@ -3671,7 +3685,7 @@ def render_mrb_rate_chart(efficiency_data, processed_data=None):
     st.altair_chart(chart, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看MRB率詳細數據"):
+    with st.expander("View MRB Rate Details"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
         st.dataframe(detail_df, use_container_width=True, key="dataframe_1")
@@ -3752,7 +3766,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
     # ==========================================
     with subtab1:
         # 極值剔除設定（改為摺疊面板）
-        with st.expander("🎛️ 效率分析設定", expanded=False):
+        with st.expander("Efficiency Settings", expanded=False):
         
             # 使用兩列佈局使控制項更緊湊
             col1, col2 = st.columns([3, 1])
@@ -3916,7 +3930,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
         st.plotly_chart(fig, use_container_width=True, key="overall_efficiency_chart")
         
         # 顯示效率數據明細
-        with st.expander("檢視效率數據明細"):
+        with st.expander("View Efficiency Details"):
             detail_df = overall_efficiency_ranking[['inspector', 'efficiency', 'total_standard_time', 'total_actual_time', 'record_count']].copy()
             
             # 如果有進行極值剔除，添加原始記錄數量和剔除數量
@@ -4539,7 +4553,7 @@ def render_efficiency_dashboard(efficiency_data, processed_data=None):
             st.plotly_chart(fig_heatmap, use_container_width=True, key="team_heatmap_in_eff")
             
             # 維度說明（折疊）
-            with st.expander("📖 指標說明", expanded=False):
+            with st.expander("Metrics Description", expanded=False):
                 st.markdown("""
                 | 維度 | 意義 | 計算方式 |
                 |------|------|---------|
@@ -5337,7 +5351,7 @@ def show_inspector_mrb_rates(data):
     st.plotly_chart(fig, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看IQC人員MRB率詳細數據"):
+    with st.expander("View IQC Staff MRB Rate"):
         detail_df = mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
         st.dataframe(detail_df, use_container_width=True, key="dataframe_5")
@@ -5419,7 +5433,7 @@ def show_material_category_mrb_rates(data):
     st.plotly_chart(fig, use_container_width=True)
     
     # 顯示詳細數據
-    with st.expander("查看物料類別MRB率詳細數據"):
+    with st.expander("View Material Category MRB Rate"):
         detail_df = cat_mrb_rate_df.copy()
         detail_df['MRB率'] = detail_df['MRB率'].apply(lambda x: f"{x:.2%}")  # 格式化為百分比
         st.dataframe(detail_df, use_container_width=True, key="dataframe_6")
@@ -5685,7 +5699,7 @@ def render_team_capability_matrix(capability_data):
     )
     
     # 維度說明
-    with st.expander("📖 指標說明（含計算細節）", expanded=False):
+    with st.expander("Metrics with Calculation Details", expanded=False):
         st.markdown("""
         | 維度 | 計算公式 | 意義 | 範例說明 |
         |------|---------|------|----------|
@@ -5843,7 +5857,7 @@ def render_individual_radar_chart(capability_data, processed_data):
                 """, unsafe_allow_html=True)
         
         # 指標計算說明
-        with st.expander("📖 指標計算說明", expanded=False):
+        with st.expander("Metrics Calculation Guide", expanded=False):
             st.markdown(f"""
             ### 🧮 {selected_inspector} 的指標計算細節
             
@@ -5902,7 +5916,7 @@ def render_capability_trend(processed_data, workload_data):
     st.markdown("追蹤檢驗員的效率變化趨勢")
     
     # 指標計算說明
-    with st.expander("📖 趨勢圖指標說明", expanded=False):
+    with st.expander("Trend Chart Metrics Guide", expanded=False):
         st.markdown("""
         ### 📊 週效率趨勢
         
@@ -6418,7 +6432,7 @@ def render_workload_dashboard(workload_data):
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # 顯示詳細數據
-                with st.expander("查看物料類別檢驗次數詳細數據"):
+                with st.expander("View Material Inspection Count"):
                     # 按檢驗員和物料大類別透視
                     pivot_data = stacked_df.pivot_table(
                         values='平均檢驗次數',
@@ -6467,7 +6481,7 @@ def render_workload_dashboard(workload_data):
     # 顯示工作負載詳細資料
     st.subheader("工作負載詳細資料📃")
     
-    with st.expander("查看工作負載詳細資料"):
+    with st.expander("View Workload Details"):
         # 處理數據用於顯示
         display_df = workload_data.copy()
         display_df['inspection_standard_time'] = display_df['inspection_standard_time'].round(2)  # 修改欄位名稱
@@ -6498,7 +6512,7 @@ def render_workload_dashboard(workload_data):
     # 新增: 顯示檢驗負載詳細資料
     st.subheader("檢驗負載詳細資料📊")
     
-    with st.expander("查看檢驗負載詳細資料"):
+    with st.expander("View Inspection Load Details"):
         # 計算每個檢驗員的詳細檢驗負載數據
         inspection_load_details = workload_data.groupby('inspector').agg(
             day_count=('date', 'nunique'),
@@ -6844,7 +6858,7 @@ def render_time_allocation_dashboard(time_allocation_data):
                 st.plotly_chart(fig_detail, use_container_width=True)
                 
                 # 顯示額外任務詳細數據
-                with st.expander(f"{selected_inspector} 額外任務詳細數據"):
+                with st.expander(f"{selected_inspector} Extra Tasks"):
                     detail_df = task_df.copy()
                     detail_df['ratio'] = (detail_df['ratio'] * 100).round(1).astype(str) + '%'
                     detail_df.columns = ['任務類型', '佔總時間比例']
@@ -6866,7 +6880,7 @@ def render_time_allocation_dashboard(time_allocation_data):
     st.subheader("所有檢驗員時間分配概覽👥 ")
     
     # 使用expander且默認為collapsed (expanded=False)
-    with st.expander("點擊展開查看所有檢驗員時間分配概覽", expanded=False):
+    with st.expander("All Inspectors Time Allocation", expanded=False):
         overview_data = []
         for _, row in time_allocation_data.iterrows():
             overview_data.append({
@@ -6897,7 +6911,7 @@ def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_d
     st.header("⏱️ 工作負載監控")
     
     # ===== 指標說明區 =====
-    with st.expander("📖 指標說明（點擊展開）", expanded=False):
+    with st.expander("Metrics Guide", expanded=False):
         st.markdown("""
         ### 📊 概覽指標說明
         
@@ -7277,7 +7291,7 @@ def render_workload_monitor_dashboard(processed_data, additional_tasks_monitor_d
             st.markdown(s)
     
     # ===== 詳細數據表格（折疊） =====
-    with st.expander("📊 詳細數據表格", expanded=False):
+    with st.expander("Detailed Data Table", expanded=False):
         # 準備顯示用的數據表
         detail_df = inspector_stats[['檢驗員', '檢驗批數', '檢驗時間(hr)', '額外任務(hr)', '總工時(hr)', '效率']].copy()
         detail_df = detail_df.sort_values('總工時(hr)', ascending=False)
@@ -7499,7 +7513,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # 顯示詳細數據
-                with st.expander(f"檢視 {selected_inspector} 額外任務詳細數據"):
+                with st.expander(f"View {selected_inspector} Extra Tasks"):
                     detail_df = inspector_data[['task_type', 'total_time', 'task_days', '每次平均時間(分鐘)']].copy()
                     detail_df.columns = ['任務類型', '總時間(分鐘)', '任務發生天數', '每次平均時間(分鐘)']
                     st.dataframe(detail_df, use_container_width=True, key="dataframe_12")
@@ -7552,7 +7566,7 @@ def render_additional_tasks_dashboard(additional_tasks_monitor_data):
         st.plotly_chart(fig_inspector_avg, use_container_width=True)
         
         # 顯示詳細數據表格
-        with st.expander("查看所有檢驗員額外任務時間詳細數據"):
+        with st.expander("All Inspectors Extra Tasks Data"):
             st.dataframe(inspector_summary, use_container_width=True, key="dataframe_13")
             
     except Exception as e:
@@ -9087,7 +9101,7 @@ def process_files_button_click(uploaded_files, start_date, end_date):
                   f"PCB標準工時對應表({len(pcb_standard_time_files)}), IQC額外任務紀錄清單({len(additional_tasks_files)})", level="INFO")
         
         # 顯示分類結果
-        with st.expander("檔案分類結果", expanded=False):
+        with st.expander("File Classification Results", expanded=False):
             st.write("IQC Report: " + ", ".join([f.name for f in iqc_report_files]))
             st.write("PCB建檔明細: " + ", ".join([f.name for f in pcb_specs_files]))
             st.write("PCB標準工時對應表: " + ", ".join([f.name for f in pcb_standard_time_files]))
@@ -9987,7 +10001,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         st.plotly_chart(fig_person_flash, use_container_width=True)
                     
                     # 該人員異常紀錄明細
-                    with st.expander(f"📋 {selected_inspector_flash} 極速檢驗明細記錄", expanded=False):
+                    with st.expander(f"{selected_inspector_flash} Flash Inspection Records", expanded=False):
                         person_display_cols = ['類別', '大類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值', '異常等級']
                         available_person_cols = [col for col in person_display_cols if col in person_flash_data.columns]
                         
@@ -10006,7 +10020,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
             
             # 詳細異常紀錄
             st.markdown("---")
-            with st.expander("📋 檢視極速檢驗異常明細（全員）", expanded=False):
+            with st.expander("Flash Inspection Anomalies (All)", expanded=False):
                 # 準備顯示欄位
                 display_cols = ['處理後檢驗員', '類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值', '異常等級']
                 available_cols = [col for col in display_cols if col in flash_anomalies.columns]
@@ -10215,7 +10229,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                         st.plotly_chart(fig_person_turtle, use_container_width=True)
                     
                     # 該人員無效工時明細記錄
-                    with st.expander(f"📋 {selected_inspector_turtle} 無效工時明細記錄", expanded=False):
+                    with st.expander(f"{selected_inspector_turtle} Invalid Time Records", expanded=False):
                         person_display_cols_t = ['類別', '大類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值']
                         available_person_cols_t = [col for col in person_display_cols_t if col in person_turtle_data.columns]
                         
@@ -10234,7 +10248,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
             
             # 詳細紀錄
             st.markdown("---")
-            with st.expander("📋 檢視無效工時明細（全員）", expanded=False):
+            with st.expander("Invalid Work Time Details (All)", expanded=False):
                 display_cols2 = ['處理後檢驗員', '類別', '料號', '檢驗日期', '處理後檢驗標準工時', '檢驗耗時', '效率比值']
                 available_cols2 = [col for col in display_cols2 if col in turtle_anomalies.columns]
                 
@@ -10431,7 +10445,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
             detail_df['大類別'] = detail_df['類別'].apply(get_main_cat_detail)
             
             # === 物料大類別明細 ===
-            with st.expander("📊 物料大類別效率明細", expanded=True):
+            with st.expander("Main Category Efficiency Details", expanded=True):
                 main_cat_detail = detail_df.groupby('大類別').agg(
                     樣本數=('效率比值', 'count'),
                     平均效率=('效率比值', 'mean'),
@@ -10493,7 +10507,7 @@ def render_anomaly_detection_dashboard(processed_data, efficiency_data):
                 st.dataframe(main_cat_detail, use_container_width=True, hide_index=True, key="dataframe_41")
             
             # === 物料小類別明細 ===
-            with st.expander("📋 物料小類別效率明細", expanded=False):
+            with st.expander("Sub-Category Efficiency Details", expanded=False):
                 # 選擇大類別篩選
                 available_main_cats = sorted(detail_df['大類別'].unique())
                 selected_main_cat = st.selectbox(
@@ -10955,7 +10969,7 @@ def render_quality_speed_matrix(processed_data, efficiency_data):
             st.plotly_chart(fig_cat, use_container_width=True)
         
         # MRB 率明細表格（取代檢驗明細）
-        with st.expander(f"📊 {selected_person} 各類別MRB率明細", expanded=False):
+        with st.expander(f"{selected_person} MRB Rate by Category", expanded=False):
             # 整理顯示資料
             mrb_detail_df = cat_stats[[
                 '大類別', '批數', 'MRB數', 'MRB率', '加權效率', '總標準工時', '總實際耗時'

@@ -8622,7 +8622,7 @@ def create_sidebar():
         """, unsafe_allow_html=True)
 
         # 使用原始上傳器（不修改其外觀）
-        uploaded_files = st.file_uploader("", type=['xlsx', 'xls'], accept_multiple_files=True, 
+        uploaded_files = st.file_uploader("Upload Files", type=['xlsx', 'xls'], accept_multiple_files=True, 
                     key="excel_files_uploader", label_visibility="collapsed")
         
         # 如果有上傳的文件，只顯示處理按鈕（不顯示自定義文件列表）
@@ -8653,10 +8653,10 @@ def create_sidebar():
         col1, col2 = st.columns(2)
         with col1:
             st.write("開始日期")
-            start_date = st.date_input("", value=None, key="start_date", label_visibility="collapsed")
+            start_date = st.date_input("Start Date", value=None, key="start_date", label_visibility="collapsed")
         with col2:
             st.write("結束日期")
-            end_date = st.date_input("", value=None, key="end_date", label_visibility="collapsed")
+            end_date = st.date_input("End Date", value=None, key="end_date", label_visibility="collapsed")
         
         # 檔案已處理後的選項
         if 'files_uploaded' in st.session_state and st.session_state.files_uploaded:
@@ -9336,7 +9336,7 @@ def show_cover_page():
     封面頁面 - Shader Lines 動態效果 + IQC 文字
     """
     # 检查URL参数
-    params = st.experimental_get_query_params()
+    params = st.query_params
     if "enter_clicked" in params:
         st.session_state.show_cover = False
         st.rerun()
